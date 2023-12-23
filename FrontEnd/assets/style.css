@@ -262,6 +262,29 @@ footer nav ul {
   justify-content: flex-end;
   margin: 2em;
 }
+/************Section filtres pour le filtrage de la gallery par catégorie de projets**************/
+#Filtres {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+#Filtres div {
+  margin-bottom: 30px;
+  border: 1px solid #1d6154;
+  padding: 5px;
+  padding-top: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 140px;
+  height: 25px;
+  text-align: center;
+  font-size: 12px;
+}
+#Filtres div:hover {
+  background-color: #1d6154;
+  color: white;
+}
+/************Fin Section filtres pour le filtrage de la gallery par catégorie de projets**************/
 
 /*****************Page de connexion********************/
 .bodylogin {
