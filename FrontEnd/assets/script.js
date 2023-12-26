@@ -14,13 +14,51 @@ fetch("http://localhost:5678/api/works")
       figure.appendChild(figcaption);
       gallery.appendChild(figure);
       // Ajout de la catégorie du travail à l'ensemble categories
-      //gallery.appendChild(".Filtres");
+      //gallery.appendChild("#Filtres");
       console.log(work.categories);
       figure.classList.add(work.categories);
     }
   });
+//gestion des bouttons
+// Récupération des pièces depuis le fichier JSON
+const tousAll = await fetch("http://localhost:5678/api/categories").then(
+  (categories) => categories.json()
+);
 
-window.onload = () => {
+const divTous = document.querySelectorAll("#Tous");
+divTous.addEventListener("click", function () {
+  const tousOrdonnees = Array.from(tous);
+  tousOrdonnees.sort(function (a, b) {
+    return a.prix - b.prix;
+  });
+  console.log(tousOrdonnees);
+});
+
+let divObjets = document.querySelector("#Objets");
+divObjets.addEventListener("click", function () {
+  const objetsFiltrees = objets.filter(function (objet) {
+    return objet.ordre <= 12;
+  });
+  console.log(objetsFiltrees);
+});
+
+let divAppartements = document.querySelector("#Appartements");
+divAppartements.addEventListener("click", function () {
+  const appartementsOrdonnees = Array.from(appartements);
+  appartementsOrdonnees.sort(function (a, b) {
+    return b.prix - a.ordre;
+  });
+  console.log(appartementsOrdonnees);
+});
+
+let divHotels = document.querySelector("#Hotels & Restaurants");
+divHotels.addEventListener("click", function () {
+  const hotelsFiltrees = hotels.filter(function (hotel) {
+    return hotel.description;
+  });
+  console.log(hotelsFiltrees);
+});
+/*window.onload = () => {
   let filtres = document.querySelectorAll("#Filtres div");
   let galleryImgs = document.querySelectorAll(".gallery img"); // Modification ici
   for (let filtre of filtres) {
@@ -36,7 +74,7 @@ window.onload = () => {
       }
     });
   }
-};
+};*/
 
 /*fetch("http://localhost:5678/api/works")
   .then((data) => data.json()) //data = données
