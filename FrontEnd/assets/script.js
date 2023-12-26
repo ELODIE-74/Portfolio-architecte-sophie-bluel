@@ -1,4 +1,44 @@
 fetch("http://localhost:5678/api/works")
+  .then((data) => data.json())
+  .then((works) => {
+    console.table(works);
+    const gallery = document.querySelector(".gallery.active");
+    for (work of works) {
+      let figure = document.createElement("figure");
+      let img = document.createElement("img");
+      img.src = work.imageUrl;
+      img.alt = work.title;
+      let figcaption = document.createElement("figcaption");
+      figcaption.innerText = work.title;
+      figure.appendChild(img);
+      figure.appendChild(figcaption);
+      gallery.appendChild(figure);
+      // Ajout de la catégorie du travail à l'ensemble categories
+      //gallery.appendChild(".Filtres");
+      console.log(work.categories);
+      figure.classList.add(work.categories);
+    }
+  });
+
+window.onload = () => {
+  let filtres = document.querySelectorAll("#Filtres div");
+  let galleryImgs = document.querySelectorAll(".gallery img"); // Modification ici
+  for (let filtre of filtres) {
+    filtre.addEventListener("click", function () {
+      let tag = this.id;
+      for (let galleryImg of galleryImgs) {
+        // Modification ici
+        galleryImg.classList.replace("active", "inactive");
+        if (tag === "all" || tag === galleryImg.dataset.categorie) {
+          // Modification ici
+          galleryImg.classList.replace("inactive", "active");
+        }
+      }
+    });
+  }
+};
+
+/*fetch("http://localhost:5678/api/works")
   .then((data) => data.json()) //data = données
   .then((works) => {
     //les oeuvres
@@ -55,8 +95,8 @@ function afficherProjets(projets = works) {
     figure.appendChild(img);
     figure.appendChild(figcaption);
     gallery.appendChild(figure);
-    // Ajout de la catégorie du travail à l'ensemble categories
-    categories.add(work.category);
-  }
-  console.table(Array.from(categories)); // affiche le tableau
-}
+    // Ajout de la catégorie du travail à l'ensemble categories*/
+//categories.add(work.category);
+//}
+//console.table(Array.from(categories)); // affiche le tableau
+//}
