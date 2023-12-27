@@ -288,9 +288,12 @@ footer nav ul {
 
 /*****************Page de connexion********************/
 .bodylogin {
-  background-color: #f5f5dc;
+  background-color: #f3f3f3;
 }
 /*Zone de connexxion*/
+.titrelogin {
+  color: #1d6154;
+}
 #zone {
   width: 400px;
   margin: 0 auto;
