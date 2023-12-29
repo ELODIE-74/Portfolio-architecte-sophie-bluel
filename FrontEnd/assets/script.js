@@ -85,6 +85,11 @@ function displayWorks(works) {
     figure.appendChild(img);
     figure.appendChild(figcaption);
     gallery.appendChild(figure);
-    displayedWorks.push(work); // Ajouter le travail au tableau des travaux déjà affichés
+    displayedWorks.push(work); // Ajoute le projet au tableau des projets déjà affichés
+    Objets.addEventListener("click", () => {
+      const objetFiltre = categorieId.filter(categorieId);
+      return categorieId.categorie.id === 1;
+    });
+    console.table(ObjetslesFiltre);
   }
 }
