@@ -5,7 +5,7 @@ fetch("http://localhost:5678/api/works")
   .then((data) => data.json()) //data = données
   .then((json) => {
     works = json;
-    displayWorks(works); // Appel de la fonction displayWorks avec les données récupérées
+    //displayWorks(works); // Appel de la fonction displayWorks avec les données récupérées
     console.table(works); //affiche les oeuvres dans un tableau
     const gallery = document.querySelector(".gallery"); //récupére les élemnts de la galerie
     const categories = new Set();
@@ -53,20 +53,23 @@ function filterByCategorie(categorie) {
   return works.filter((work) => work.category.name === categorie); //retourne tous les éléments avec le même identifiant (ici objet)
   //work = 1 travail, chaque work correspond à une catégorie de travail (objet/appartements/hôtels et restaurants)
 }
-let isGalleryDisplayed = false;
+
+let displayedWorks = []; // Tableau pour stocker les travaux déjà affichés, éviter les doublons d'affichage
 function displayWorks(works) {
-  const gallery = document.querySelector(".gallery");
-  if (isGalleryDisplayed) {
-    gallery.innerHTML = ""; // Supprimer le contenu actuel de la galerie
-  }
+  //fonction qui affichent les travaux passé en paramètres
+  const gallery = document.querySelector(".gallery"); //récupération des éléments de la galerie
   for (const work of works) {
-    // Vérifier si le travail est déjà dans la galerie
-    const existingWork = gallery.querySelector(`[data-id="${work.id}"]`);
-    if (existingWork) {
-      continue; // Passer à la prochaine itération de la boucle
+    //boucle pour passer d'un projet aux autres projets
+    // Variable pour vérifier si le projet est déjà présent.
+    const isDisplayed = displayedWorks.some(
+      // La méthode some() teste si au moins un élément du tableau passe le test
+      (displayedWork) => displayedWork.id === work.id //regarde si les id(identifiants) sont correctes
+    );
+    if (isDisplayed) {
+      continue; // sinon passe à la prochaine instruction de la boucle
     }
+    //recréation des éléments de la galerie
     let figure = document.createElement("figure");
-    figure.dataset.id = work.id; // Ajouter l'ID du travail en tant qu'attribut data
     let img = document.createElement("img");
     img.src = work.imageUrl;
     img.alt = work.title;
@@ -75,38 +78,6 @@ function displayWorks(works) {
     figure.appendChild(img);
     figure.appendChild(figcaption);
     gallery.appendChild(figure);
+    displayedWorks.push(work); // Ajouter le travail au tableau des travaux déjà affichés
   }
-  isGalleryDisplayed = true; // Marquer la galerie comme déjà affichée
 }
-//partie page de connexion
-/*const container = document.getElementById(".Zone");
-const loginButton = document.getElementById("#login");
-const signupButton = document.getElementById("#submit");
-let error = null;
-signupButton.add("click", () => {
-  container.classList.remove("active");
-});
-loginButton.addEventListener("click", () => {
-  container.classList.remove("active");
-});
-let myForm = document.getElementById("myForm");
-myForm.addEventListener("submit", function (e) {
-  e.preventDefault();
-  let myInput = document.getElementById("login");
-  if (myInput.value == "") {
-    e.preventDefault();
-  }
-  if (!passwordValidator.test(password)) {
-    error = "le mot de passe doit contenir 8 caractère minimum";
-  } else if (!email) {
-    error = "Adresse email obligatoire";
-  }
-  if (error) {
-    return resizeBy.status(400).json({ message: error });
-  }
-  //const exist = await UserActivation.FindOne({ email:email });
-  if (exist) {
-    return res.status(400).json({ message: "email déjà existant" });
-  }
-});
-*/
