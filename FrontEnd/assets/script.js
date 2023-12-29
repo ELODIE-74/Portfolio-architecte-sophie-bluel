@@ -21,9 +21,14 @@ fetch("http://localhost:5678/api/works")
       figure.appendChild(figcaption); //lier la légende à l'élément
       gallery.appendChild(figure); //lier l'oeuvre(1 figure) à la galerie de projets dans son ensemble
     }
-
+    let tous = filterByCategorie("Tous");
+    console.table(tous);
     let objets = filterByCategorie("Objets");
-    console.log(objets);
+    console.table(objets);
+    let appartements = filterByCategorie("Appartements");
+    console.table(appartements);
+    let hotels = filterByCategorie("Hotels & restaurants");
+    console.table(hotels);
   });
 
 fetch("http://localhost:5678/api/categories")
@@ -35,6 +40,8 @@ fetch("http://localhost:5678/api/categories")
     const filtres = document.getElementById("Filtres");
     for (categorie of categories) {
       //boucle pour parcourir les différenytes catégories
+
+      //création du bouton de la catégorie objet
       let divObjets = document.createElement("div"); //création de la div objet
       divObjets.innerText = categorie.name; //rajout du nom de la catégorie
       divObjets.id = categorie.name; //rajout de l'identifiant de la catégorie
