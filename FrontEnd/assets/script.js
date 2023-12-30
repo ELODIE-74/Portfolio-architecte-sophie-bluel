@@ -63,7 +63,7 @@ function filterByCategorie(categorie) {
 }
 
 //affichage des travaux
-let displayedWorks = []; // Tableau pour stocker les travaux déjà affichés, éviter les doublons d'affichage
+let displayedWorks = []; // Tableau pour stocker les travaux déjà affichés, évite les doublons lors de l'affichage
 function displayWorks(works) {
   //fonction qui affichent les travaux passé en paramètres
   const gallery = document.querySelector(".gallery"); //récupération des éléments de la galerie
@@ -77,7 +77,7 @@ function displayWorks(works) {
     if (isDisplayed) {
       continue; // sinon passe à la prochaine instruction de la boucle
     }
-    //recréation des éléments de la galerie
+    //recréation des éléments de la galerie pour l'affichage
     let figure = document.createElement("figure");
     let img = document.createElement("img");
     img.src = work.imageUrl;
@@ -90,7 +90,7 @@ function displayWorks(works) {
     displayedWorks.push(work); // Ajoute le projet au tableau des projets déjà affichés
   }
 }
-
+//écoutes des boutons(div tous) et objet
 tous.addEventListener("click", function () {
   positionIndex = positionIndex - 1;
   changeButtons(positionIndex, "gauche");
@@ -100,11 +100,12 @@ objets.addEventListener("click", function () {
   changeButtons(positionIndex, "droite");
 });
 
-//changement de boutons
+//changement de boutons,déplacement
 function changeButtons(index, sensButton) {
   if (positionIndex === -1 && sensButton === "gauche") {
-    positionIndex = works.length - 1;
+    positionIndex = works.length - 1; //pour revenir en arrière, bouton d'avant
   } else if (positionIndex === works.length && sensButton == "droite") {
+    //pour aller au bouton suivant
     positionIndex = 0;
   }
 }
