@@ -91,11 +91,13 @@ function displayWorks(works) {
   }
 }
 //écoutes des boutons(div tous) et objet
-tous.addEventListener("click", function () {
+const Tous = document.createElement("div");
+const Objets = document.createElement("div");
+Tous.addEventListener("click", function () {
   positionIndex = positionIndex - 1;
   changeButtons(positionIndex, "gauche");
 });
-objets.addEventListener("click", function () {
+Objets.addEventListener("click", function () {
   positionIndex = positionIndex + 1;
   changeButtons(positionIndex, "droite");
 });
@@ -107,8 +109,10 @@ function changeButtons(index, sensButton) {
   } else if (positionIndex === works.length && sensButton == "droite") {
     //pour aller au bouton suivant
     positionIndex = 0;
+    filter.classList.add("Filtres");
   }
 }
+const buttonWork = document.querySelector("div");
 //mise à jour des boutons
 const imageUrl = "assets/images/${works[positionIndex].image}";
 buttonWork.src = imageUrl;
