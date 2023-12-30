@@ -1,5 +1,6 @@
 let works;
 let categories;
+let positionIndex = 0;
 
 fetch("http://localhost:5678/api/works")
   .then((data) => data.json()) //data = données
@@ -61,6 +62,7 @@ function filterByCategorie(categorie) {
   //work = 1 travail, chaque work correspond à une catégorie de travail (objet/appartements/hôtels et restaurants)
 }
 
+//affichage des travaux
 let displayedWorks = []; // Tableau pour stocker les travaux déjà affichés, éviter les doublons d'affichage
 function displayWorks(works) {
   //fonction qui affichent les travaux passé en paramètres
@@ -86,10 +88,36 @@ function displayWorks(works) {
     figure.appendChild(figcaption);
     gallery.appendChild(figure);
     displayedWorks.push(work); // Ajoute le projet au tableau des projets déjà affichés
-    Objets.addEventListener("click", () => {
-      const objetFiltre = categorieId.filter(categorieId);
-      return categorieId.categorie.id === 1;
-    });
-    console.table(ObjetslesFiltre);
   }
 }
+
+tous.addEventListener("click", function () {
+  positionIndex = positionIndex - 1;
+  changeButtons(positionIndex, "gauche");
+});
+objets.addEventListener("click", function () {
+  positionIndex = positionIndex + 1;
+  changeButtons(positionIndex, "droite");
+});
+
+//changement de boutons
+function changeButtons(index, sensButton) {
+  if (positionIndex === -1 && sensButton === "gauche") {
+    positionIndex = works.length - 1;
+  } else if (positionIndex === works.length && sensButton == "droite") {
+    positionIndex = 0;
+  }
+}
+//mise à jour des boutons
+const imageUrl = "assets/images/${works[positionIndex].image}";
+buttonWork.src = imageUrl;
+buttonWork.alt = "Work ${positionIndex + 1}";
+
+//mise à jour de la figcaption
+const tagline = works[positionIndex].tagline;
+document.querySelector(figcaption).innerText = tagline;
+
+console.log("Clic sur la catégorie ${sensButton}");
+
+//affichage du premier bouton
+changeButtons(positionIndex, "BoutonTous");
