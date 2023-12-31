@@ -7,21 +7,23 @@ fetch("http://localhost:5678/api/works")
   .then((json) => {
     works = json;
     //displayWorks(works); // Appel de la fonction displayWorks avec les données récupérées
-    console.table(works); //affiche les oeuvres dans un tableau
+    console.table(works);
     const gallery = document.querySelector(".gallery"); //récupére les élemnts de la galerie
     const categories = new Set();
     for (work of works) {
       // création des élément d'1 oeuvre (image+title+figcaption)
       let figure = document.createElement("figure"); //création d'un élément
-      let img = document.createElement("img"); //création de l'image
-      img.src = work.imageUrl; //rajout et récupération du chemin de l'image(url)
-      img.alt = work.title; //rajout du titre comme attribut
-      let figcaption = document.createElement("figcaption"); //création de la légende de l'image
-      figcaption.innerText = work.title; //rajout du titre de la légende
-      figure.appendChild(img); //lier l'image à l'élément(figure)
-      figure.appendChild(figcaption); //lier la légende à l'élément
-      gallery.appendChild(figure); //lier l'oeuvre(1 figure) à la galerie de projets dans son ensemble
+      let img = document.createElement("img");
+      img.src = work.imageUrl;
+      img.alt = work.title;
+      let figcaption = document.createElement("figcaption");
+      figcaption.innerText = work.title;
+      //lier les éléments parents/enfants
+      figure.appendChild(img);
+      figure.appendChild(figcaption);
+      gallery.appendChild(figure);
     }
+    //affichage des tableaux par catégorie
     let tous = filterByCategorie("Tous");
     console.table(tous);
     let objets = filterByCategorie("Objets");
@@ -37,7 +39,7 @@ fetch("http://localhost:5678/api/categories")
   .then((response) => response.json())
   //on récupère ensuite les données
   .then((categoriesData) => {
-    categories = new Set(categoriesData); // Créez un ensemble de catégories
+    categories = new Set(categoriesData); //données de la catégorie
     const filtres = document.getElementById("Filtres");
     for (categorie of categories) {
       //boucle pour parcourir les différenytes catégories
@@ -59,25 +61,23 @@ fetch("http://localhost:5678/api/categories")
 //Fonction qui filtre un projet = une catégorie
 function filterByCategorie(categorie) {
   return works.filter((work) => work.category.name === categorie); //retourne tous les éléments avec le même identifiant (ici objet)
-  //work = 1 travail, chaque work correspond à une catégorie de travail (objet/appartements/hôtels et restaurants)
 }
 
 //affichage des travaux
 let displayedWorks = []; // Tableau pour stocker les travaux déjà affichés, évite les doublons lors de l'affichage
 function displayWorks(works) {
   //fonction qui affichent les travaux passé en paramètres
-  const gallery = document.querySelector(".gallery"); //récupération des éléments de la galerie
+  const gallery = document.querySelector(".gallery");
   for (const work of works) {
-    //boucle pour passer d'un projet aux autres projets
     // Variable pour vérifier si le projet est déjà présent.
     const isDisplayed = displayedWorks.some(
       // La méthode some() teste si au moins un élément du tableau passe le test
-      (displayedWork) => displayedWork.id === work.id //regarde si les id(identifiants) sont correctes
+      (displayedWork) => displayedWork.id === work.id
     );
     if (isDisplayed) {
       continue; // sinon passe à la prochaine instruction de la boucle
     }
-    //recréation des éléments de la galerie pour l'affichage
+    //éléments de la galerie pour l'affichage
     let figure = document.createElement("figure");
     let img = document.createElement("img");
     img.src = work.imageUrl;
@@ -90,16 +90,19 @@ function displayWorks(works) {
     displayedWorks.push(work); // Ajoute le projet au tableau des projets déjà affichés
   }
 }
+
 //écoutes des boutons(div tous) et objet
 const Tous = document.createElement("div");
 const Objets = document.createElement("div");
 Tous.addEventListener("click", function () {
   positionIndex = positionIndex - 1;
   changeButtons(positionIndex, "gauche");
+  displayWorks(categories);
 });
 Objets.addEventListener("click", function () {
   positionIndex = positionIndex + 1;
   changeButtons(positionIndex, "droite");
+  displayWorks(categories);
 });
 
 //changement de boutons,déplacement
