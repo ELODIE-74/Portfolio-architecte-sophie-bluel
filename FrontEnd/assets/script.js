@@ -58,13 +58,41 @@ fetch("http://localhost:5678/api/categories")
       error
     );
   });
+
 //Fonction qui filtre un projet = une catégorie
 function filterByCategorie(categorie) {
   return works.filter((work) => work.category.name === categorie); //retourne tous les éléments avec le même identifiant (ici objet)
+  displayWorks(filterByCategorie);
 }
+//reprise des éléments du work dans la fonction displayWorks
+const displayWorks = (works) => {
+  for (const work of works) {
+    const figure = document.createElement("figure");
+    const img = document.createElement("img");
+    const figcaption = document.createElement("figcaption");
+    img.src = work.imageUrl;
+    img.alt = work.title;
+    figcaption.textContent = work.title;
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+    gallery.appendChild(figure);
+  }
+};
+//écoutes des boutons(div tous) et objet
+const Tous = document.createElement("div");
+const Objets = document.createElement("div");
+Tous.addEventListener("click", function () {
+  const travauxFiltres = filterByCategorie("tous");
+  displayWorks(travauxFiltres);
+});
+Objets.addEventListener("click", function () {
+  const travauxFiltres = filterByCategorie("objets");
+  displayWorks(travauxFiltres);
+});
 
+//Autre essai reprise idéee projet5 changement boutons pour l'affichage des travaux, addeventlistener et displayworks
 //affichage des travaux
-let displayedWorks = []; // Tableau pour stocker les travaux déjà affichés, évite les doublons lors de l'affichage
+/*let displayedWorks = []; // Tableau pour stocker les travaux déjà affichés, évite les doublons lors de l'affichage
 function displayWorks(works) {
   //fonction qui affichent les travaux passé en paramètres
   const gallery = document.querySelector(".gallery");
@@ -90,10 +118,6 @@ function displayWorks(works) {
     displayedWorks.push(work); // Ajoute le projet au tableau des projets déjà affichés
   }
 }
-
-//écoutes des boutons(div tous) et objet
-const Tous = document.createElement("div");
-const Objets = document.createElement("div");
 Tous.addEventListener("click", function () {
   positionIndex = positionIndex - 1; //retour en arrière, gauche
   changeButtons(positionIndex, "gauche");
@@ -128,4 +152,4 @@ document.querySelector(figcaption).innerText = tagline;
 console.log("Clic sur la catégorie ${sensButton}");
 
 //affichage du premier bouton
-changeButtons(positionIndex, "BoutonTous");
+changeButtons(positionIndex, "BoutonTous");*/
