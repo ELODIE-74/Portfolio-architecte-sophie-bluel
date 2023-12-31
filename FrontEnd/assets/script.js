@@ -77,46 +77,6 @@ const displayWorks = (works) => {
     gallery.appendChild(figure);
   }
 };
-//écoutes des boutons(div tous) et objet
-const Tous = document.createElement("div");
-const Objets = document.createElement("div");
-Tous.addEventListener("click", function () {
-  const travauxFiltres = filterByCategorie("tous");
-  displayWorks(travauxFiltres);
-});
-Objets.addEventListener("click", function () {
-  const travauxFiltres = filterByCategorie("objets");
-  displayWorks(travauxFiltres);
-});
-
-//Autre essai reprise idéee projet5 changement boutons pour l'affichage des travaux, addeventlistener et displayworks
-//affichage des travaux
-/*let displayedWorks = []; // Tableau pour stocker les travaux déjà affichés, évite les doublons lors de l'affichage
-function displayWorks(works) {
-  //fonction qui affichent les travaux passé en paramètres
-  const gallery = document.querySelector(".gallery");
-  for (const work of works) {
-    // Variable pour vérifier si le projet est déjà présent.
-    const isDisplayed = displayedWorks.some(
-      // La méthode some() teste si au moins un élément du tableau passe le test
-      (displayedWork) => displayedWork.id === work.id
-    );
-    if (isDisplayed) {
-      continue; // sinon passe à la prochaine instruction de la boucle
-    }
-    //éléments de la galerie pour l'affichage
-    let figure = document.createElement("figure");
-    let img = document.createElement("img");
-    img.src = work.imageUrl;
-    img.alt = work.title;
-    let figcaption = document.createElement("figcaption");
-    figcaption.innerText = work.title;
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
-    gallery.appendChild(figure);
-    displayedWorks.push(work); // Ajoute le projet au tableau des projets déjà affichés
-  }
-}
 Tous.addEventListener("click", function () {
   positionIndex = positionIndex - 1; //retour en arrière, gauche
   changeButtons(positionIndex, "gauche");
@@ -151,4 +111,44 @@ document.querySelector(figcaption).innerText = tagline;
 console.log("Clic sur la catégorie ${sensButton}");
 
 //affichage du premier bouton
-changeButtons(positionIndex, "BoutonTous");*/
+changeButtons(positionIndex, "BoutonTous");
+
+//Autre essai reprise idéee projet5 changement boutons pour l'affichage des travaux, addeventlistener et displayworks
+//affichage des travaux
+/*let displayedWorks = []; // Tableau pour stocker les travaux déjà affichés, évite les doublons lors de l'affichage
+function displayWorks(works) {
+  //fonction qui affichent les travaux passé en paramètres
+  const gallery = document.querySelector(".gallery");
+  for (const work of works) {
+    // Variable pour vérifier si le projet est déjà présent.
+    const isDisplayed = displayedWorks.some(
+      // La méthode some() teste si au moins un élément du tableau passe le test
+      (displayedWork) => displayedWork.id === work.id
+    );
+    if (isDisplayed) {
+      continue; // sinon passe à la prochaine instruction de la boucle
+    }
+    //éléments de la galerie pour l'affichage
+    let figure = document.createElement("figure");
+    let img = document.createElement("img");
+    img.src = work.imageUrl;
+    img.alt = work.title;
+    let figcaption = document.createElement("figcaption");
+    figcaption.innerText = work.title;
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+    gallery.appendChild(figure);
+    displayedWorks.push(work); // Ajoute le projet au tableau des projets déjà affichés
+  }
+}
+//écoutes des boutons(div tous) et objet
+/*const Tous = document.createElement("div");
+const Objets = document.createElement("div");
+Tous.addEventListener("click", function () {
+  const travauxFiltres = filterByCategorie("tous");
+  displayWorks(travauxFiltres);
+});
+Objets.addEventListener("click", function () {
+  const travauxFiltres = filterByCategorie("objets");
+  displayWorks(travauxFiltres);
+});*/
