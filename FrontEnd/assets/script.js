@@ -62,7 +62,6 @@ fetch("http://localhost:5678/api/categories")
 //Fonction qui filtre un projet = une catégorie
 function filterByCategorie(categorie) {
   return works.filter((work) => work.category.name === categorie); //retourne tous les éléments avec le même identifiant (ici objet)
-  displayWorks(filterByCategorie);
 }
 //reprise des éléments du work dans la fonction displayWorks
 const displayWorks = (works) => {
