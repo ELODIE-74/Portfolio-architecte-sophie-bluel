@@ -1,6 +1,6 @@
 let works;
 let categories;
-let positionIndex = 0;
+let positionIndex = 0; //variable position (pour le changement des boutons)
 
 fetch("http://localhost:5678/api/works")
   .then((data) => data.json()) //data = données
@@ -42,7 +42,7 @@ fetch("http://localhost:5678/api/categories")
     categories = new Set(categoriesData); //données de la catégorie
     const filtres = document.getElementById("Filtres");
     for (categorie of categories) {
-      //boucle pour parcourir les différenytes catégories
+      //boucle pour parcourir les différentes catégories
 
       //création du bouton de la catégorie objet
       let divObjets = document.createElement("div"); //création de la div objet
@@ -95,12 +95,12 @@ function displayWorks(works) {
 const Tous = document.createElement("div");
 const Objets = document.createElement("div");
 Tous.addEventListener("click", function () {
-  positionIndex = positionIndex - 1;
+  positionIndex = positionIndex - 1; //retour en arrière, gauche
   changeButtons(positionIndex, "gauche");
   displayWorks(categories);
 });
 Objets.addEventListener("click", function () {
-  positionIndex = positionIndex + 1;
+  positionIndex = positionIndex + 1; //bond vers l'avant, droite
   changeButtons(positionIndex, "droite");
   displayWorks(categories);
 });
