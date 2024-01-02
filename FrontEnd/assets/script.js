@@ -1,3 +1,4 @@
+//initialisation des variables
 let works;
 let categories;
 let positionIndex = 0; //variable position (pour le changement des boutons)
@@ -63,7 +64,7 @@ fetch("http://localhost:5678/api/categories")
 function filterByCategorie(categorie) {
   return works.filter((work) => work.category.name === categorie); //retourne tous les éléments avec le même identifiant (ici objet)
 }
-//reprise des éléments du work dans la fonction displayWorks
+//reprise des éléments du work dans la fonction displayWorks et affichage des oeuvres
 const displayWorks = (works) => {
   for (const work of works) {
     const figure = document.createElement("figure");
@@ -77,7 +78,31 @@ const displayWorks = (works) => {
     gallery.appendChild(figure);
   }
 };
-Tous.addEventListener("click", function () {
+//gestion des click sur les boutons
+function ecouteClick(event) {
+  const categorie = event.target.id;
+  positionIndex = categories.indexOf(categorie);
+}
+
+//initialisations des boutons
+const tousButton = document.getElementById("Tous");
+tous.addEventListener("click", ecouteClick);
+const objetsButton = document.getElementById("objets");
+objets.addEventListener("clic", ecouteClick);
+
+//autre essai boutons
+/*const tousButton = document.getElementById("tous");
+const objetsButton = document.getElementById("objets");
+
+tousButton.addEventListener("click", function () {
+  filterByCategorie("tous");
+});
+objetsButton.addEventListener("click", function () {
+  filterByCategorie("objets");
+});*/
+
+//autre essai filtre
+/*Tous.addEventListener("click", function () {
   positionIndex = positionIndex - 1; //retour en arrière, gauche
   changeButtons(positionIndex, "gauche");
   displayWorks(categories);
@@ -111,7 +136,7 @@ document.querySelector(figcaption).innerText = tagline;
 console.log("Clic sur la catégorie ${sensButton}");
 
 //affichage du premier bouton
-changeButtons(positionIndex, "BoutonTous");
+changeButtons(positionIndex, "BoutonTous");*/
 
 //Autre essai reprise idéee projet5 changement boutons pour l'affichage des travaux, addeventlistener et displayworks
 //affichage des travaux
