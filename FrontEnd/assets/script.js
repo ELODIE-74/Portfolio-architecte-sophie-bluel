@@ -19,7 +19,6 @@ fetch("http://localhost:5678/api/categories")
   .then((categoriesData) => {
     categories = new Set(categoriesData); //données de la catégorie
     const filtres = document.getElementById("Filtres"); //variable globale qui récupérer les filtres
-
     for (categorie of categories) {
       //boucle pour parcourir les différentes catégories
       //création du bouton de la catégorie objet
@@ -47,7 +46,6 @@ const displayWorks = (works) => {
   const gallery = document.querySelector(".gallery"); //variable qui récupére tous les élèment de la galerie
   //Boucle pour parcourir d'un projet en particulier à tous les projets
   for (const work of works) {
-    //création des éléments d'un projet
     const figure = document.createElement("figure");
     const img = document.createElement("img");
     const figcaption = document.createElement("figcaption");
@@ -57,6 +55,7 @@ const displayWorks = (works) => {
     figure.appendChild(img);
     figure.appendChild(figcaption);
     gallery.appendChild(figure);
+    //displayWorks(works);
   }
 };
 //gestion des click sur les boutons
@@ -69,7 +68,20 @@ function ecouteClick() {
       //écoute de l'évènement au click sur un bouton
       let textecategorie = categorie.innerText; //variable pour récupérer le texte de la catégorie
       //textcategorie; reprendre là le codage
-      console.log(categorie); //affiche une catégorie
+      //textecategorie = categorie.imageUrl;
+      //categorie.innerText = categorie;
+      //textecategorie = categorie.nextElementSibling;
+      //textecategorie.innerText += categorie.textContent;
+      //let imageUrl = categorie.getAttribute("src");
+      // Filtrer les oeuvres en fonction de la catégorie cliquée
+      const oeuvresFiltrees = filterByCategorie(textecategorie);
+      // Effacer les éléments affichés actuellement dans la galerie
+      const gallery = document.querySelector(".gallery");
+      gallery.innerHTML = "";
+      // Afficher les nouvelles oeuvres filtrées dans la galerie
+      displayWorks(oeuvresFiltrees);
+
+      //console.log(categorie); //affiche une catégorie
     });
   }
 }
