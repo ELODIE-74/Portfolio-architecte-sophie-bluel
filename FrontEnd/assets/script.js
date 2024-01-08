@@ -41,6 +41,7 @@ fetch("http://localhost:5678/api/categories")
 function filterByCategorie(categorie) {
   return works.filter((work) => work.category.name === categorie); //retourne tous les éléments avec le même identifiant (ici les différentes catégories)
 }
+
 //reprise des éléments du work dans la fonction displayWorks et affichage des oeuvres
 const displayWorks = (works) => {
   const gallery = document.querySelector(".gallery"); //variable qui récupére tous les élèment de la galerie
@@ -67,21 +68,14 @@ function ecouteClick() {
     categorie.addEventListener("click", function () {
       //écoute de l'évènement au click sur un bouton
       let textecategorie = categorie.innerText; //variable pour récupérer le texte de la catégorie
-      //textcategorie; reprendre là le codage
-      //textecategorie = categorie.imageUrl;
-      //categorie.innerText = categorie;
-      //textecategorie = categorie.nextElementSibling;
-      //textecategorie.innerText += categorie.textContent;
-      //let imageUrl = categorie.getAttribute("src");
-      // Filtrer les oeuvres en fonction de la catégorie cliquée
+      // Filtre les oeuvres en fonction de la catégorie cliquée
       const oeuvresFiltrees = filterByCategorie(textecategorie);
-      // Effacer les éléments affichés actuellement dans la galerie
+      // Efface les éléments affichés actuellement dans la galerie
       const gallery = document.querySelector(".gallery");
       gallery.innerHTML = "";
-      // Afficher les nouvelles oeuvres filtrées dans la galerie
+      // Affiche les nouvelles oeuvres filtrées dans la galerie
       displayWorks(oeuvresFiltrees);
-
-      //console.log(categorie); //affiche une catégorie
+      console.log(categorie); //affiche une catégorie
     });
   }
 }
