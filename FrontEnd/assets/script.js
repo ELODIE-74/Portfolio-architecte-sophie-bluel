@@ -38,8 +38,17 @@ fetch("http://localhost:5678/api/categories")
   });
 
 //Fonction qui filtre un projet = une catégorie
+//function filterByCategorie(categorie) {
+//return works.filter((work) => work.category.name === categorie); //retourne tous les éléments avec le même identifiant (ici les différentes catégories)
+//}
 function filterByCategorie(categorie) {
-  return works.filter((work) => work.category.name === categorie); //retourne tous les éléments avec le même identifiant (ici les différentes catégories)
+  if (categorie === "Tous") {
+    // Retourne tous les travaux sans filtrage
+    return works;
+  } else {
+    // Filtre les travaux en fonction de la catégorie
+    return works.filter((work) => work.category.name === categorie);
+  }
 }
 
 //reprise des éléments du work dans la fonction displayWorks et affichage des oeuvres
@@ -56,7 +65,6 @@ const displayWorks = (works) => {
     figure.appendChild(img);
     figure.appendChild(figcaption);
     gallery.appendChild(figure);
-    //displayWorks(works);
   }
 };
 //gestion des click sur les boutons
