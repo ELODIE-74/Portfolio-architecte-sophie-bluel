@@ -2,6 +2,15 @@
 let works;
 let categories;
 let positionIndex = 0; //variable position (pour le changement des boutons)
+const logpage = document.getElementById("logpageaccueil");
+const accessToken = localStorage.getItem("accessToken");
+if (accessToken) {
+  logpage.innerText = "logout";
+  logpage.addEventListener("click", function (event) {
+    event.preventDefault();
+    localStorage.clear();
+  });
+}
 
 fetch("http://localhost:5678/api/works")
   .then((data) => data.json()) //data = données
@@ -88,51 +97,3 @@ function ecouteClick() {
     });
   }
 }
-
-//page de connexion
-// login.js
-/*document.getElementById("submit").addEventListener("submit", async (event) => {
-  event.preventDefault(); // Empêche le rechargement de la page après la soumission du formulaire
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  try {
-    const response = await fetch("http://localhost:5678/api/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    if (!response.ok) {
-      throw new Error("Erreur lors de la connexion");
-    }
-    const data = await response.json();
-    const token = data.token;
-    // Stocke le token dans le local storage pour une utilisation ultérieure
-    localStorage.setItem("accessToken", token);
-    console.log("Connexion réussie");
-    window.location.href = "index.html"; // Redirige l'utilisateur vers la page principale
-  } catch (error) {
-    console.error(error);
-    alert("Erreur lors de la connexion. Veuillez réessayer plus tard.");
-  }
-});
-let users;
-function identification() {
-  const emailenvoie = document.getElementsByName("mail");
-  const motdepasseenvoie = (motdepasseenvoie =
-    document.getElementsByName("password"));
-  for (login of users) {
-    const email = document.getElementsByName("mail")[0].value;
-    const motdepasse = login.email;
-    console.log(email, password);
-    //vérification que ces deux valeurs sont correctes
-    if (email !== "sophie.bluel@test.tld" || motdepasse !== "SOphie") {
-      //affiche un message d'avertissement si l'une ou les deux valeurs ne sont pas correctes
-      alert(
-        "Votre email ou mot de passe sont incorrectes, veuillez rentrer les bons identifiants au bon format"
-      );
-      return;
-    }
-  }
-}*/
