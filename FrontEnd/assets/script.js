@@ -46,7 +46,8 @@ function filterByCategorie(categorie) {
     // Retourne tous les travaux sans filtrage
     return works;
   } else {
-    // Filtre les travaux en fonction de la catégorie
+    // Filtre
+    // les travaux en fonction de la catégorie
     return works.filter((work) => work.category.name === categorie);
   }
 }
@@ -87,3 +88,5 @@ function ecouteClick() {
     });
   }
 }
+
+//page de connexion
