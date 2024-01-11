@@ -319,7 +319,7 @@ form a {
   text-align: center;
 }
 /* Taille inputs texte et mot de passe */
-input[type="text"],
+input[type="email"],
 input[type="password"] {
   width: 100%;
   padding: 12px 20px;
