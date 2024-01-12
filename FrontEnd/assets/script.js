@@ -10,6 +10,12 @@ if (accessToken) {
     event.preventDefault();
     localStorage.clear();
   });
+  const header = document.querySelector("#header_hidden");
+  const connexionHeader = document.createElement("div");
+  connexionHeader.classList.add("barre_hidden");
+  connexionHeader.innerHTML =
+    '<i class="fa-regular fa-pen-to-square"></i><p>Mode édition</p>';
+  header.prepend(connexionHeader);
 }
 
 fetch("http://localhost:5678/api/works")
