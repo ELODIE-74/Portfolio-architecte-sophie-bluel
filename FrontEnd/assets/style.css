@@ -378,4 +378,10 @@ a {
   text-decoration: none;
   color: black;
 }
+.button_hidden {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  padding-right: 10px;
+}
 /***************Fin page de connexion****************/

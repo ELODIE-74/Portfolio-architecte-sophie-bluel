@@ -16,6 +16,15 @@ if (accessToken) {
   connexionHeader.innerHTML =
     '<i class="fa-regular fa-pen-to-square"></i><p>Mode édition</p>';
   header.prepend(connexionHeader);
+
+  const buttonHidden = document.querySelector(".button_hidden");
+  const buttonedition = document.createElement("div");
+  buttonedition.innerHTML =
+    '<i class="fa-regular fa-pen-to-square"></i><p>Modifier</p>';
+  buttonHidden.appendChild(buttonedition);
+  // Ajoutez le code suivant pour masquer les boutons de filtrage en mode édition
+  const filterButtons = document.getElementById("Filtres"); // Remplacez "filterButtons" par l'ID réel des boutons de filtrage
+  filterButtons.style.display = "none";
 }
 
 fetch("http://localhost:5678/api/works")
