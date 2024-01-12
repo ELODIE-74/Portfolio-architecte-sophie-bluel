@@ -10,21 +10,21 @@ if (accessToken) {
     event.preventDefault();
     localStorage.clear();
   });
-  const header = document.querySelector("#header_hidden");
-  const connexionHeader = document.createElement("div");
-  connexionHeader.classList.add("barre_hidden");
+  const header = document.querySelector("#header_hidden"); //variable qui récupére l'élément html
+  const connexionHeader = document.createElement("div"); //variable qui crée la div
+  connexionHeader.classList.add("barre_hidden"); //ajout du css du bandeau
   connexionHeader.innerHTML =
     '<i class="fa-regular fa-pen-to-square"></i><p>Mode édition</p>';
-  header.prepend(connexionHeader);
-
-  const buttonHidden = document.querySelector(".button_hidden");
-  const buttonedition = document.createElement("div");
+  header.prepend(connexionHeader); //ajout des éléments crée pour le mode édition
+  //code précedant pour le masquage du bandeau en mode édition
+  const buttonHidden = document.querySelector(".button_hidden"); //variable qui récupére l'élement html
+  const buttonedition = document.createElement("div"); //création de la div
   buttonedition.innerHTML =
-    '<i class="fa-regular fa-pen-to-square"></i><p class="edit_modifier">Modifier</p>';
-  buttonHidden.appendChild(buttonedition);
-  // Ajoutez le code suivant pour masquer les boutons de filtrage en mode édition
-  const filterButtons = document.getElementById("Filtres"); // Remplacez "filterButtons" par l'ID réel des boutons de filtrage
-  filterButtons.style.display = "none";
+    '<i class="fa-regular fa-pen-to-square"></i><p class="edit_modifier">Modifier</p>'; //ajout des éléments
+  buttonHidden.appendChild(buttonedition); //ajout des éléments crée pour le mode édition
+  //le code suivant masque les boutons de filtrage en mode édition
+  const filterButtons = document.getElementById("Filtres"); // récupére la div qui contient les filtres
+  filterButtons.style.display = "none"; //fait disparaitres les bouton de filtrage en mode édition
 }
 
 fetch("http://localhost:5678/api/works")

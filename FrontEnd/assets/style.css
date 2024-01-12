@@ -383,6 +383,8 @@ a {
   justify-content: center;
   align-items: center;
   gap: 20px;
+  margin-top: 80px;
+  margin-bottom: 80px;
 }
 .edit_modifier {
   display: flex;
