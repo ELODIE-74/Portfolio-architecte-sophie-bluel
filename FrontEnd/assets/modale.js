@@ -2,13 +2,14 @@ let modal = null;
 const focusablesSelector = "button,a,input,textarea";
 let focusables = [];
 let previouslyFocusedElement = null;
+
 const openModal = async function (e) {
   e.preventDefault();
-  const target = this.getAttribute("href");
+  const target = this.getAttribute("href"); //code pour ouvrir la modale
   if (target.startsWith("#")) {
-    modal = document.querySelector(target);
+    modal = document.querySelector(target); //trouver l'élément par rapport à la cible
   } else {
-    modal = await loadModal(target);
+    modal = await loadModal(target); //lui passe l'url en paramètre
   }
   modal.style.display = null;
   modal.removeAttribute("aria-hidden");
@@ -18,17 +19,43 @@ const openModal = async function (e) {
 const modifierLink = document.querySelector(".js-modal");
 modifierLink.addEventListener("click", openModal);
 
-/* Récupérez la référence à votre modale
-const modal = document.getElementById("#modale1");
-// Récupérez la référence au bouton qui ouvre la modale
-const btnOpenModal = document.getElementById("btnOpenModal");
-// Récupérez la référence à'élément quime la modale
-closeModal = document.querySelector(".-xmark");
-//outez un évén de clic sur leon qui ouvre modale
-btnOpen.addEventListener("click", () => {
-  modal.style.display = "block"; // Affichez la mod
-});
-// Ajoutez un événement de clic sur l'élément qui ferme la modale
-closeModal.addEventListener("click", function () {
-  modal.style.display = "none"; // Masquez la modale
-});*/
+const closeModal = function (e) {
+  if (modal === null) return;
+  e.preventDefault();
+  modal.setAttribute("aria-hidden", "true");
+  modal.removeAttribute("aria-modal");
+  modal.removeaddEventLisetener("click", closeModal);
+  modal
+    .querySelector("js-modal-close")
+    .removeaddEventLisetener("click", closeModal);
+};
+
+/* Récupération de l'élément conteneur de la modale
+const modalContainer = document.getElementById(".gallery");
+// Fonction pour afficher les images des projets dans la modale
+function afficherImagesProjetsDansModale() {
+  // Clear modal container
+  modalContainer.innerHTML = "";
+  // Parcourir tous les projets
+  projets.forEach((work) => {
+    // Créer un élément <div> pour chaque projet
+    const divProjet = document.createElement("div");
+    // Créer un élément <img> pour l'image du projet
+    const imgProjet = document.createElement("img");
+    imgProjet.src = work.image;
+    // Créer un élément <i> pour l'icône de poubelle
+    const iconePoubelle = document.createElement("i");
+    iconePoubelle.className = "fa fa-trash-can";
+    // Ajouter le gestionnaire d'événement sur l'icône de poubelle
+    iconePoubelle.addEventListener("click", () => {
+      // Appeler la fonction de suppression du projet ici
+      supprimerProjet(work.id);
+    });
+    // Ajouter l'image et l'icône de poubelle au div du projet
+    divProjet.appendChild(imgProjet);
+    divProjet.appendChild(iconePoubelle);
+    // Ajouter le div du projet à la modale
+    modalContainer.appendChild(divProjet);
+  });
+}
+afficherImagesProjetsDansModale();*/
