@@ -7,7 +7,7 @@ const accessToken = localStorage.getItem("accessToken");
 if (accessToken) {
   logpage.innerText = "logout";
   logpage.addEventListener("click", function (event) {
-    event.preventDefault();
+    //event.preventDefault();
     localStorage.clear();
   });
   const header = document.querySelector("#header_hidden"); //variable qui récupére l'élément html
@@ -20,7 +20,7 @@ if (accessToken) {
   const buttonHidden = document.querySelector(".button_hidden"); //variable qui récupére l'élement html
   const buttonedition = document.createElement("div"); //création de la div
   buttonedition.innerHTML =
-    '<i class="fa-regular fa-pen-to-square"></i><p class="edit_modifier">Modifier</p>'; //ajout des éléments
+    '<i class="fa-regular fa-pen-to-square"></i><p class="edit_modifier"><a href="#modale1">Modifier</a></p>'; //ajout des éléments
   buttonHidden.appendChild(buttonedition); //ajout des éléments crée pour le mode édition
   //le code suivant masque les boutons de filtrage en mode édition
   const filterButtons = document.getElementById("Filtres"); // récupére la div qui contient les filtres
