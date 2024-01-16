@@ -14,6 +14,8 @@ const openModal = async function (e) {
   modal.style.display = null;
   modal.removeAttribute("aria-hidden");
   modal.setAttribute("aria-modal", "true");
+  modal.addEventListener("click", closeModal);
+  modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
 };
 // Ajoutez un écouteur d'événement au lien de modification
 const modifierLink = document.querySelector(".js-modal");
@@ -24,18 +26,50 @@ const closeModal = function (e) {
   e.preventDefault();
   modal.setAttribute("aria-hidden", "true");
   modal.removeAttribute("aria-modal");
-  modal.removeaddEventLisetener("click", closeModal);
+  modal.removeEventListener("click", closeModal);
   modal
-    .querySelector("js-modal-close")
-    .removeaddEventLisetener("click", closeModal);
+    .querySelector(".js-modal-close")
+    .removeEventListener("click", closeModal);
+  const hideModal = function () {
+    modal.style.display = "none";
+    modal = null;
+  };
+  modal.addEventListener("js-modal-close", hideModal);
 };
 
-/* Récupération de l'élément conteneur de la modale
-const modalContainer = document.getElementById(".gallery");
+//ouverture deuxieme modal
+const loadModal = async function (url) {
+  const target = "#" + url.split("#")[1];
+  const existingModal = document.querySelector(target);
+  if (existingModal !== null) return existingModal;
+
+  const html = await fetch(url).then((response) => response.text());
+  const element = document
+    .createRange()
+    .createContextualFragment(html)
+    .querySelector(target);
+
+  if (element === null)
+    throw "l'element ${target} n'a pas était trouver dans la page ${url}";
+  document.body.append(element);
+  return element;
+};
+
+document.querySelectorAll(".js-modal").forEach((a) => {
+  a.addEventListener("click", openModal);
+});
+
+window.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" || e.key === "Esc") {
+    closeModal(e);
+  }
+});
+/*Récupération de l'élément conteneur de la modale
+const gallery = document.querySelector(".gallery");
 // Fonction pour afficher les images des projets dans la modale
 function afficherImagesProjetsDansModale() {
   // Clear modal container
-  modalContainer.innerHTML = "";
+  gallery.innerHTML = "";
   // Parcourir tous les projets
   projets.forEach((work) => {
     // Créer un élément <div> pour chaque projet
