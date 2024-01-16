@@ -397,9 +397,6 @@ a {
 
 /***************Fin page de connexion****************/
 /******design mode édition modale *****************/
-.titremodale {
-  padding-top: 15px;
-}
 .btn_ajoutphoto {
   font-family: "Syne";
   color: white;
@@ -440,9 +437,29 @@ a {
 .titremodale {
   color: black;
   font-weight: lighter;
+  padding-top: 15px;
 }
 .fa-xmark {
   position: relative;
   top: -40px;
   right: -280px;
+  width: 40px;
+  height: 20px;
+  font-weight: bold;
+}
+/**deuxieme modale**/
+.modalHaut {
+  display: flex;
+  justify-content: space-between;
+}
+.fa-arrow-left {
+  position: relative;
+  padding-right: 550px;
+  width: 40px;
+  height: 20px;
+  font-weight: bold;
+}
+.fa-regular .fa-image {
+  width: 30px;
+  margin-bottom: 15px;
 }

@@ -1,3 +1,11 @@
+const url = "http://localhost:5678/api/works";
+const stockage = {
+  method: "GET",
+  headers: {
+    Accept: "application/json",
+  },
+};
+
 let modal = null;
 const focusablesSelector = "button,a,input,textarea";
 let focusables = [];
