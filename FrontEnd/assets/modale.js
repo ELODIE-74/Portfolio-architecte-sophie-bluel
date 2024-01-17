@@ -1,3 +1,5 @@
+/*import { works } from "./script";*/
+
 let modal = null;
 const focusablesSelector = "button,a,input,textarea";
 let focusables = [];
@@ -5,13 +7,6 @@ let previouslyFocusedElement = null;
 
 // Récupération et affichage des projets dans la modal
 function afficherImagesProjetsDansModale() {
-  const url = "http://localhost:5678/api/works";
-  const stockage = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
   //Afficher les projets dans la modal
   const modalContent = document.querySelector("#modale1");
   modalContent.innerHTML = "";
