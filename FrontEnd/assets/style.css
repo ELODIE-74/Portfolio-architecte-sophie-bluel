@@ -523,7 +523,7 @@ a {
   margin-bottom: 10px;
 }
 
-.btn-ajoutphoto,
+.btn-ajoutphotonew,
 .btn_validerphoto {
   text-align: center;
   text-decoration: none;
@@ -532,4 +532,8 @@ a {
   color: #ffffff;
   border-radius: 60px;
   width: 180px;
+}
+
+.btn-ajoutphotonew {
+  color: #77b5f2;
 }

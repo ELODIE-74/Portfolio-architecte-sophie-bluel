@@ -73,14 +73,14 @@ document.querySelectorAll(".js-modal").forEach((a) => {
   a.addEventListener("click", openModal);
 });
 
-/*Récupération de l'élément conteneur de la modale
+//Récupération de l'élément conteneur de la modale
 const gallery = document.querySelector(".gallery");
 // Fonction pour afficher les images des projets dans la modale
 function afficherImagesProjetsDansModale() {
   // Clear modal container
   gallery.innerHTML = "";
   // Parcourir tous les projets
-  projets.forEach((work) => {
+  projets.forEach((works) => {
     // Créer un élément <div> pour chaque projet
     const divProjet = document.createElement("div");
     // Créer un élément <img> pour l'image du projet
@@ -101,4 +101,4 @@ function afficherImagesProjetsDansModale() {
     modalContainer.appendChild(divProjet);
   });
 }
-afficherImagesProjetsDansModale();*/
+afficherImagesProjetsDansModale();
