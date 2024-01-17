@@ -38,12 +38,18 @@ const closeModal = function (e) {
   modal
     .querySelector(".js-modal-close")
     .removeEventListener("click", closeModal);
+
   const hideModal = function () {
     modal.style.display = "none";
     modal = null;
   };
-  modal.addEventListener("js-modal-close", hideModal);
+  modal.querySelector(".js-modal-close").addEventListener("click", hideModal);
 };
+window.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" || e.key === "Esc") {
+    closeModal(e);
+  }
+});
 
 //ouverture deuxieme modal
 const loadModal = async function (url) {
@@ -67,11 +73,6 @@ document.querySelectorAll(".js-modal").forEach((a) => {
   a.addEventListener("click", openModal);
 });
 
-window.addEventListener("keydown", function (e) {
-  if (e.key === "Escape" || e.key === "Esc") {
-    closeModal(e);
-  }
-});
 /*Récupération de l'élément conteneur de la modale
 const gallery = document.querySelector(".gallery");
 // Fonction pour afficher les images des projets dans la modale
