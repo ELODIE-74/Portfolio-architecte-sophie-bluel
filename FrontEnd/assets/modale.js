@@ -1,16 +1,34 @@
-const url = "http://localhost:5678/api/works";
-const stockage = {
-  method: "GET",
-  headers: {
-    Accept: "application/json",
-  },
-};
-
 let modal = null;
 const focusablesSelector = "button,a,input,textarea";
 let focusables = [];
 let previouslyFocusedElement = null;
 
+// Récupération et affichage des projets dans la modal
+function afficherImagesProjetsDansModale() {
+  const url = "http://localhost:5678/api/works";
+  const stockage = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  //Afficher les projets dans la modal
+  const modalContent = document.querySelector("#modale1");
+  modalContent.innerHTML = "";
+  works.forEach((work) => {
+    const workDiv = document.createElement("div");
+    const workImage = document.createElement("img");
+    workImage.src = work.image;
+    workDiv.appendChild(workImage);
+    const workTitre = document.createElement("h2");
+    workTitre.textContent = work.titre;
+    workDiv.appendChild(workTitre);
+    modalContent.appendChild(workDiv);
+    img.style.width = "80px";
+    img.style.height = "100px";
+  });
+}
+//ouverture de la modale
 const openModal = async function (e) {
   e.preventDefault();
   const target = this.getAttribute("href"); //code pour ouvrir la modale
@@ -25,10 +43,11 @@ const openModal = async function (e) {
   modal.addEventListener("click", closeModal);
   modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
 };
-// Ajoutez un écouteur d'événement au lien de modification
+// Ajout d'un écouteur d'événement au lien de modification
 const modifierLink = document.querySelector(".js-modal");
 modifierLink.addEventListener("click", openModal);
 
+//fermeture de la modale
 const closeModal = function (e) {
   if (modal === null) return;
   e.preventDefault();
@@ -72,33 +91,3 @@ const loadModal = async function (url) {
 document.querySelectorAll(".js-modal").forEach((a) => {
   a.addEventListener("click", openModal);
 });
-
-//Récupération de l'élément conteneur de la modale
-const gallery = document.querySelector(".gallery");
-// Fonction pour afficher les images des projets dans la modale
-function afficherImagesProjetsDansModale() {
-  // Clear modal container
-  gallery.innerHTML = "";
-  // Parcourir tous les projets
-  projets.forEach((works) => {
-    // Créer un élément <div> pour chaque projet
-    const divProjet = document.createElement("div");
-    // Créer un élément <img> pour l'image du projet
-    const imgProjet = document.createElement("img");
-    imgProjet.src = work.image;
-    // Créer un élément <i> pour l'icône de poubelle
-    const iconePoubelle = document.createElement("i");
-    iconePoubelle.className = "fa fa-trash-can";
-    // Ajouter le gestionnaire d'événement sur l'icône de poubelle
-    iconePoubelle.addEventListener("click", () => {
-      // Appeler la fonction de suppression du projet ici
-      supprimerProjet(work.id);
-    });
-    // Ajouter l'image et l'icône de poubelle au div du projet
-    divProjet.appendChild(imgProjet);
-    divProjet.appendChild(iconePoubelle);
-    // Ajouter le div du projet à la modale
-    modalContainer.appendChild(divProjet);
-  });
-}
-afficherImagesProjetsDansModale();
