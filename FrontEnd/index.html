@@ -82,11 +82,12 @@
               </div>
             </div>
             <hr />
-            <button class="btn_ajoutphoto">
-              <a href="#modale2" class="btn-ajoutphotonew js-modal"
+            <button class="btn_ajoutphoto js-modal">
+              <a href="#modale2" class="btn_ajoutphoto js-modal"
                 >Ajouter une photo</a
               >
             </button>
+          </div>
           </div>
           <!-- deuxième modal + ajout photo -->
           <div
@@ -142,19 +143,20 @@
                 <label for="title" class="champ">Titre</label>
                 <input
                   type="text"
-                  class="ajoutModale"
+                  class="ajoutModale champ"
                   id="title"
                   name="title"
                 />
-                <label for="categories-select">Catégories</label>
+                <label for="categories-select" class="champ">Catégories</label>
                 <select name="categories" class="champ" id="categories-select">
-                  <option value="objets">Objets</option>
+                  <option value="vide"></option>
+                  <option value="objet">Objets</option>
                   <option value="Appartements">Appartements</option>
                   <option value="Restaurants">Restaurants</option>
                 </select>
               </div>
               <hr />
-              <button onclick="window.location.href = 'index.html/';">
+              <button  class="btn_valider" onclick="window.location.href = 'index.html/';">
                 Valider
               </button>
             </div>
