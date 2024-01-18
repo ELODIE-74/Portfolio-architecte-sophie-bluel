@@ -81,65 +81,81 @@
                 <i class="fa-solid fa-trash-can"></i>
               </div>
             </div>
-            <div id="barre_fixe"></div>
+            <hr />
             <button class="btn_ajoutphoto">
               <a href="#modale2" class="js-modal">Ajouter une photo</a>
             </button>
           </div>
-        </aside>
-        <!-- deuxième modal ajout de projet -->
-        <aside
-          id="modale2"
-          class="modal"
-          aria-hidden="true"
-          role="dialog"
-          aria-labelledby="titlemodale"
-          style="display: none"
-        >
-          <!-- modal ajout de la photo -->
+          <!-- deuxième modal ajout de projet -->
           <div
-            id="modal-wrapper modale-ajout-element "
-            class="modal-wrapper modale-ajout-element"
+            id="modale2"
+            class="modal"
+            aria-hidden="true"
+            role="dialog"
+            aria-labelledby="titlemodale"
+            style="display: none"
           >
-            <div class="modalHaut">
-              <a id="modale-direction" href="./index.html"
-                ><i class="fa-solid fa-arrow-left" style="color: #000000"></i>
-                <i class="fa-solid fa-xmark js-modal-close"></i>
-              </a>
-            </div>
-
-            <h2 id="titlemodale" class="titre2modale">Ajout photo</h2>
-            <div id="ajout-image" class="ajout-image">
-              <div class="div-img">
-                <img id="imageChoisit" src="" alt="" />
+            <!-- modal ajout de la photo -->
+            <div id="modal-wrapper" class="modal-wrapper">
+              <div class="modalHaut">
+                <a id="modale-direction" href="./index.html"
+                  ><i class="fa-solid fa-arrow-left" style="color: #000000"></i>
+                  <i class="fa-solid fa-xmark js-modal-close"></i>
+                </a>
               </div>
-              <input
-                type="file"
-                id="champImage"
-                name="image"
-                accept="image/*"
-                style="display: none"
-              />
 
-              <i
-                id="iconeMontagne"
-                class="fa-regular fa-image"
-                style="color: grey"
-              ></i>
-              <a><button class="btn-ajoutphotonew">+ Ajouter photo</button></a>
-              <p class="text-format">jpg,png: 4mo max</p>
+              <h2 id="titlemodale" class="titre2modale">Ajout photo</h2>
+              <div id="ajout-image" class="ajout-image">
+                <div class="div-img">
+                  <img
+                    id="imageChoisit"
+                    src="./assets/images/abajour-tahina.png"
+                    alt="image télécharger"
+                    style="display: none"
+                  />
+                </div>
+                <input
+                  type="file"
+                  id="champImage"
+                  name="image"
+                  accept="image/*"
+                  style="display: none"
+                />
+
+                <i
+                  id="iconeMontagne"
+                  class="fa-regular fa-image"
+                  style="color: grey"
+                ></i>
+
+                <input
+                  class="btn-ajoutphotonew"
+                  type="button"
+                  value="+ Ajouter photo"
+                />
+
+                <p class="text-format">jpg,png: 4mo max</p>
+              </div>
+              <div class="ajoutElements">
+                <label for="title" class="champ">Titre</label>
+                <input
+                  type="text"
+                  class="ajoutModale"
+                  id="title"
+                  name="title"
+                />
+                <label for="categories-select">Catégories</label>
+                <select name="categories" class="champ" id="categories-select">
+                  <option value="objets">Objets</option>
+                  <option value="Appartements">Appartements</option>
+                  <option value="Restaurants">Restaurants</option>
+                </select>
+              </div>
+              <hr />
+              <button onclick="window.location.href = 'index.html/';">
+                Valider
+              </button>
             </div>
-            <div class="ajoutElements">
-              <label for="title" class="champ">Titre</label>
-              <input type="text" class="ajoutModale" id="title" name="title" />
-              <label for="title" class="champ">Catégorie</label>
-              <select id="category" name="category" class="ajoutModale">
-                <option></option>
-              </select>
-            </div>
-            <button class="btn_validerphoto">
-              <a href="#" class="js-modal">Valider</a>
-            </button>
           </div>
         </aside>
         <div class="gallery"></div>

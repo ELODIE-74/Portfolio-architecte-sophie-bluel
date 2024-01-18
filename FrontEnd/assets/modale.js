@@ -6,9 +6,9 @@ let focusables = [];
 let previouslyFocusedElement = null;
 
 // Récupération et affichage des projets dans la modal
-function afficherImagesProjetsDansModale() {
+/*function afficherImagesProjetsDansModale() {
   //Afficher les projets dans la modal
-  const modalContent = document.querySelector("#modale1");
+  const modalContent = document.querySelector("#modales");
   modalContent.innerHTML = "";
   works.forEach((work) => {
     const workDiv = document.createElement("div");
@@ -22,7 +22,7 @@ function afficherImagesProjetsDansModale() {
     img.style.width = "80px";
     img.style.height = "100px";
   });
-}
+}*/
 //ouverture de la modale
 const openModal = async function (e) {
   e.preventDefault();
