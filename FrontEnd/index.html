@@ -75,7 +75,7 @@
         >
           <div class="modal-wrapper">
             <h1 class="titremodale">Galerie photo</h1>
-            <a><i class="fa-solid fa-xmark js-modal-close"></i></a>
+            <a><i class="fa-solid fa-xmark xmodale1 js-modal-close"></i></a>
             <div id="modaleImg" class="modaleImg">
               <div class="iconepoubelle">
                 <i class="fa-solid fa-trash-can"></i>
@@ -83,10 +83,12 @@
             </div>
             <hr />
             <button class="btn_ajoutphoto">
-              <a href="#modale2" class="js-modal">Ajouter une photo</a>
+              <a href="#modale2" class="btn-ajoutphotonew js-modal"
+                >Ajouter une photo</a
+              >
             </button>
           </div>
-          <!-- deuxième modal ajout de projet -->
+          <!-- deuxième modal + ajout photo -->
           <div
             id="modale2"
             class="modal"
@@ -95,13 +97,13 @@
             aria-labelledby="titlemodale"
             style="display: none"
           >
-            <!-- modal ajout de la photo -->
-            <div id="modal-wrapper" class="modal-wrapper">
+            <!--ajout de la photo -->
+            <div id="modale-ajoutElement" class="modale-ajoutElement">
               <div class="modalHaut">
                 <a id="modale-direction" href="./index.html"
-                  ><i class="fa-solid fa-arrow-left" style="color: #000000"></i>
-                  <i class="fa-solid fa-xmark js-modal-close"></i>
-                </a>
+                  ><i class="fa-solid fa-arrow-left" style="color: #000000"></i
+                ></a>
+                <i class="fa-solid fa-xmark xmodale2 js-modal-close"></i>
               </div>
 
               <h2 id="titlemodale" class="titre2modale">Ajout photo</h2>
