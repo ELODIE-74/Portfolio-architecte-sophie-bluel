@@ -76,7 +76,7 @@
           <div class="modal-wrapper">
             <h1 class="titremodale">Galerie photo</h1>
             <a>
-              <i class="fa-solid fa-xmark xmodale1 js-modal-close"></i>
+              <i class="fa-solid fa-xmark xmodale1 js-modal-retour"></i>
             </a>
             <div id="modaleImg" class="modaleImg">
               <div class="iconepoubelle">
@@ -101,8 +101,8 @@
           >
             <!--ajout de la photo -->
             <div id="modale-ajoutElement" class="modale-ajoutElement">
-              <div class="modalHaut">
-                <a id="modale-direction" href="./index.html"
+              <div class="modalHaut js-modal-close">
+                <a class="modale-direction" href="./index.html"
                   ><i class="fa-solid fa-arrow-left" style="color: #000000"></i
                 ></a>
                 <i class="fa-solid fa-xmark xmodale2 js-modal-close"></i>
@@ -132,11 +132,13 @@
                   style="color: grey"
                 ></i>
 
-                <input
-                  class="btn-ajoutphotonew"
-                  type="button"
-                  value="+ Ajouter photo"
-                />
+                <a id="js-lien" href="https://www.google.com">
+                  <input
+                    class="btn-ajoutphotonew"
+                    type="button"
+                    value="+ Ajouter photo"
+                  />
+                </a>
 
                 <p class="text-format">jpg,png: 4mo max</p>
               </div>

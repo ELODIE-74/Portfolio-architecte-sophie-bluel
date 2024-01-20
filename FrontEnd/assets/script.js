@@ -178,6 +178,7 @@ const loadModal = async function (url) {
 };
 document.querySelectorAll(".js-modal").forEach((a) => {
   a.addEventListener("click", openModal);
+  //sélectionne chaque lien et permet de mettre un addeventlistener
 });
 
 //fonction pour afficher les travaux dans la modale
@@ -195,7 +196,7 @@ function afficherImagesProjetsDansModale() {
     projetImg.style.width = "80px";
     projetImg.style.height = "100px";
     // Définir l'icône de la poubelle
-    poubelleIcon.classList.add("iconepoubelle", "fa-trash-can");
+    poubelleIcon.classList.add("iconepoubelle");
     poubelleIcon.addEventListener("click", () => {
       supprimerProjet(projet.id); // Appele une fonction pour supprimer le projet
     });
