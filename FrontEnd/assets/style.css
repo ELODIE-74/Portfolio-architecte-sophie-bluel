@@ -397,16 +397,6 @@ a {
 
 /***************Fin page de connexion****************/
 /******design mode édition modale *****************/
-.btn_ajoutphoto {
-  color: white;
-  background-color: #1d6154;
-  width: 180px;
-  height: 30px;
-  font-size: small;
-  border-radius: 60px;
-  text-align: center;
-  margin-top: 460px;
-}
 .modal {
   position: fixed;
   display: flex;
@@ -437,9 +427,36 @@ a {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding-top: 10px;
+  gap: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
-.modaleImg .fa-trash-can {
-  color: red;
+.iconepoubelle {
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  position: relative;
+  top: -75px;
+  right: 25px;
+  cursor: pointer;
+}
+.iconepoubelle i {
+  color: white;
+}
+hr {
+  color: blue;
+  margin-bottom: 30px;
+}
+.btn_ajoutphoto {
+  color: white;
+  background-color: #1d6154;
+  width: 180px;
+  height: 30px;
+  font-size: small;
+  border-radius: 60px;
+  text-align: center;
+  margin-top: 130px;
 }
 .modale-ajoutElement {
   position: absolute;
@@ -538,9 +555,10 @@ a {
   margin-top: 15px;
   margin-right: 15px;
 }
-.ajoutElements,
+
 hr {
-  margin-top: 15px;
+  color: blue;
+  margin-top: 60px;
 }
 .btn_valider {
   color: white;
@@ -550,7 +568,7 @@ hr {
   font-size: small;
   border-radius: 60px;
   text-align: center;
-  margin-top: 15px;
+  margin-top: 50px;
   margin-left: 200px;
   border: none;
 }
