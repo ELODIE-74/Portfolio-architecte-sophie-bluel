@@ -433,6 +433,14 @@ a {
   text-align: center;
   border-radius: 12px;
 }
+.modaleImg {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.modaleImg .fa-trash-can {
+  color: red;
+}
 .modale-ajoutElement {
   position: absolute;
   top: 50%; /* Centrer verticalement */

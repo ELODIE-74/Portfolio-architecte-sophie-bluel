@@ -130,6 +130,7 @@ const openModal = async function (e) {
   modal.setAttribute("aria-modal", "true");
   modal.addEventListener("click", closeModal);
   modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
+  afficherImagesProjetsDansModale("#modale1");
 };
 // Ajout d'un écouteur d'événement au lien de modification
 const modifierLink = document.querySelector(".js-modal");
@@ -179,8 +180,36 @@ document.querySelectorAll(".js-modal").forEach((a) => {
   a.addEventListener("click", openModal);
 });
 
-//Récupération et affichage des projets dans la modal
 function afficherImagesProjetsDansModale() {
+  const modalContent = document.querySelector(".modaleImg");
+  modalContent.innerHTML = "";
+  // Boucle sur les projets
+  works.forEach((projet) => {
+    // Créer les éléments nécessaires pour afficher le projet et l'icône de suppression
+    const projetDiv = document.createElement("div");
+    const projetImg = document.createElement("img");
+    const poubelleIcon = document.createElement("img");
+    // Définir l'URL de l'image du projet
+    projetImg.src = projet.imageUrl;
+    projetImg.style.width = "80px";
+    projetImg.style.height = "100px";
+    // Définir l'icône de la poubelle
+    poubelleIcon.classList.add("fa-solid", "fa-trash-can");
+    poubelleIcon.style.width = "20px";
+    poubelleIcon.style.height = "20px";
+    poubelleIcon.style.cursor = "pointer";
+    poubelleIcon.addEventListener("click", () => {
+      supprimerProjet(projet.id); // Appeler une fonction pour supprimer le projet
+    });
+    // Ajouter les éléments au contenu de la modale
+    projetDiv.appendChild(projetImg);
+    projetDiv.appendChild(poubelleIcon);
+    modalContent.appendChild(projetDiv);
+  });
+}
+
+//Récupération et affichage des projets dans la modal
+/*function afficherImagesProjetsDansModale() {
   //Afficher les projets dans la modal
   const modalContent = document.querySelector("#modale1");
   modalContent.innerHTML = "";
@@ -199,4 +228,4 @@ function afficherImagesProjetsDansModale() {
   //afficherImagesProjetsDansModale.appendChild(figure);
 }
 //afficherImagesProjetsDansModale();
-//const modaleWrapper = document.querySelector("#modale-wrapper");
+//const modaleWrapper = document.querySelector("#modale-wrapper");*/
