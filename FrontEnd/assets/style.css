@@ -441,9 +441,12 @@ a {
   right: 25px;
   cursor: pointer;
 }
-.iconepoubelle i {
-  color: white;
+.trash-color {
+  color: red;
+  width: 15px;
+  height: 15px;
 }
+
 hr {
   color: blue;
   margin-bottom: 30px;

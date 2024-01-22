@@ -206,3 +206,59 @@ function afficherImagesProjetsDansModale() {
     modalContent.appendChild(projetDiv);
   });
 }
+function displayModal() {
+  // Récupérer les images existantes depuis l'API avec une requête fetch
+  fetch("/images")
+    .then((response) => response.json())
+    .then((data) => {
+      // Créer une variable pour stocker le contenu HTML de la fenêtre modale
+      let modalContent = "";
+      // Parcourir les images récupérées et les ajouter dans le contenu de la fenêtre modale
+      data.forEach((image) => {
+        modalContent += `<div class="ajout-image">
+                          <img src="${image.url}" alt="${image.alt}">
+                          <button onclick="deleteImage(${image.id})">Supprimer</button>
+                        </div>`;
+      });
+      // Afficher le contenu de la fenêtre modale dans le DOM
+      const modal = document.getElementById("modal");
+      modal.innerHTML = modalContent;
+      modal.style.display = "block";
+    });
+}
+//deuxième fonction pour ajouter une photo
+/*function addPhoto() {
+  // récupére l'élément du formulaire contenant les informations
+  const photoForm = document.getElementById("ajout-image");
+  // rée un nouvel objet
+  const formData = new FormData(photoForm);
+  window.open(url) = "download-link";
+  // envoie les données du formulaire via une requête
+  fetch("<http://votre-api.com/photos>", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // traite la réponse de l'API
+      if (data.success) {
+        ("vous avez réussi");
+      } else {
+        return error;
+      }
+    })
+    .catch((error) => {
+      // en cas d'erreur de connexion au serveur
+      console.error(
+        "Une erreur est survenue lors de l'ajout de la photo :",
+        error
+      );
+    });
+}*/
+const downloadLink = document.getElementById("download-link");
+downloadLink.addEventListener("click", function (event) {
+  event.preventDefault();
+});
