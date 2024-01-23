@@ -75,12 +75,12 @@
         >
           <div class="modal-wrapper">
             <h1 class="titremodale">Galerie photo</h1>
-            <a>
+            <a class="js-modal-close">
               <i class="fa-solid fa-xmark xmodale1 js-modal-retour"></i>
             </a>
             <div id="modaleImg" class="modaleImg">
               <div class="iconepoubelle">
-                <i class="fa-solid fa-trash-can trash-color"></i>
+                <i class="fa-solid fa-trash-can"></i>
               </div>
             </div>
             <hr />
@@ -109,6 +109,7 @@
               </div>
 
               <h2 id="titlemodale" class="titre2modale">Ajout photo</h2>
+
               <div id="ajout-image" class="ajout-image">
                 <div class="div-img">
                   <img
@@ -132,11 +133,12 @@
                   style="color: grey"
                 ></i>
 
-                <a href="https://www.google.com" id="download-link">
+                <a href="https://www.pexels.com/fr-fr/">
                   <input
                     class="btn-ajoutphotonew"
                     type="button"
                     value="+ Ajouter photo"
+                    onclick="addPhoto()"
                   />
                 </a>
 
@@ -159,12 +161,9 @@
                 </select>
               </div>
               <hr />
-              <button
-                class="btn_valider"
-                onclick="window.location.href = 'index.html/';"
+              <a href="./index.html"
+                ><button class="btn_valider">Valider</button></a
               >
-                Valider
-              </button>
             </div>
           </div>
         </aside>
