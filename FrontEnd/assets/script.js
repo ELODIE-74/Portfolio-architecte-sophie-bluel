@@ -212,8 +212,13 @@ function afficherImagesProjetsDansModale() {
     projetDiv.appendChild(projetImg);
     projetDiv.appendChild(poubelleIcon);
     modalContent.appendChild(projetDiv);
+    // Ajoute une nouvelle div avec un identifiant unique pour chaque projet
+    projetDiv.id = `projet-${projet.id}`; // Utilisez l'identifiant du projet comme partie de l'identifiant de la div
+    // Définir le fond de la div avec l'URL de l'image
+    projetDiv.style.backgroundImage = `url(${projet.imageUrl})`;
   });
 }
+
 function supprimerProjet(projetId) {
   // Demande de confirmation avant la suppression
   if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
@@ -240,7 +245,41 @@ function supprimerProjet(projetId) {
   }
 }
 //deuxième fonction pour ajouter une photo
-function addPhoto() {
+document
+  .getElementById("ajout-image")
+  .addEventListener("submit", function (event) {
+    event.preventDefault(); // Empêche le rechargement de la page par défaut
+
+    const photoInput = document.getElementById("div-img");
+    const photo = photoInput.files[0]; // Récupère le fichier photo sélectionné par l'utilisateur
+
+    if (photo) {
+      // Crée un objet de type FormData pour envoyer les données du formulaire
+      const formData = new FormData();
+      formData.append("imageChoisit", imageChoisit);
+
+      // Effectue une requête POST à l'API pour ajouter la photo
+      fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            afficherMessageSucces("Photo ajoutée avec succès");
+            // Met à jour la fenêtre modale pour afficher la nouvelle photo
+            // Vous pouvez appeler une fonction appropriée ici
+          } else {
+            afficherMessageErreur("Erreur lors de l'ajout de la photo");
+          }
+        })
+        .catch((error) => {
+          afficherMessageErreur("Erreur lors de l'ajout de la photo");
+        });
+    } else {
+      afficherMessageErreur("Veuillez sélectionner une photo");
+    }
+  });
+/*function addPhoto() {
   // Récupérer les valeurs des champs
   const title = document.getElementById("title").value;
   const categories = document.getElementById("categories-select").value;
@@ -256,40 +295,20 @@ function addPhoto() {
 
   // Utiliser la valeur de l'image comme souhaité
   console.log("Image sélectionnée :", imageFile);
-}
 
-/*function addPhoto() {
-  // récupére l'élément du formulaire contenant les informations
-  const photoForm = document.getElementById("ajout-image");
-  // rée un nouvel objet
-  const formData = new FormData(photoForm);
-  window.open(url) = "download-link";
-  // envoie les données du formulaire via une requête
-  fetch("<http://votre-api.com/photos>", {
+  fetch("http://localhost:5678/api/works", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: formData,
+    body: formData, // Envoyer les données du formulaire
   })
-    .then((response) => response.json())
-    .then((data) => {
-      // traite la réponse de l'API
-      if (data.success) {
-        ("vous avez réussi");
+    .then((response) => {
+      if (response.ok) {
+        afficherMessageSucces("Projet ajouté avec succès");
+        afficherImagesProjetsDansModale(); // Actualiser la modale pour afficher les projets mis à jour
       } else {
-        return error;
+        afficherMessageErreur("Erreur lors de l'ajout du projet");
       }
     })
     .catch((error) => {
-      // en cas d'erreur de connexion au serveur
-      console.error(
-        "Une erreur est survenue lors de l'ajout de la photo :",
-        error
-      );
+      afficherMessageErreur("Erreur lors de l'ajout du projet");
     });
 }*/
-/*const downloadLink = document.getElementById("download-link");
-downloadLink.addEventListener("click", function (event) {
-  event.preventDefault();
-});*/
