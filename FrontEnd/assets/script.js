@@ -215,23 +215,30 @@ function afficherImagesProjetsDansModale() {
   });
 }
 function supprimerProjet(projetId) {
-  // Envoyer une requête DELETE à l'API pour supprimer le projet
-  fetch(`http://localhost:5678/api/works/{id}`, {
-    method: "DELETE",
-  })
-    .then((response) => {
-      if (response.ok) {
-        afficherMessageSucces("Projet supprimé avec succès");
-        afficherImagesProjetsDansModale(); // Actualiser la modale pour afficher les projets mis à jour
-      } else {
-        afficherMessageErreur("Erreur lors de la suppression du projet");
-      }
+  // Demande de confirmation avant la suppression
+  if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
+    // Récupérer le token de l'utilisateur
+    const accessToken = localStorage.getItem("accessToken");
+    // Envoyer une requête DELETE à l'API pour supprimer le projet avec le token dans l'en-tête
+    fetch(`http://localhost:5678/api/works/${projetId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     })
-    .catch((error) => {
-      afficherMessageErreur("Erreur lors de la suppression du projet");
-    });
+      .then((response) => {
+        if (response.ok) {
+          afficherMessageSucces("Projet supprimé avec succès");
+          afficherImagesProjetsDansModale(); // Actualiser la modale pour afficher les projets mis à jour
+        } else {
+          afficherMessageErreur("Erreur lors de la suppression du projet");
+        }
+      })
+      .catch((error) => {
+        afficherMessageErreur("Erreur lors de la suppression du projet");
+      });
+  }
 }
-
 //deuxième fonction pour ajouter une photo
 function addPhoto() {
   // Récupérer les valeurs des champs
