@@ -151,7 +151,7 @@ const closeModal = function (e) {
 
   const hideModal = function () {
     modal.style.display = "none";
-    modal = null;
+    //modal = null;
   };
   modal.querySelector(".js-modal-close").addEventListener("click", hideModal);
 };
@@ -160,39 +160,6 @@ window.addEventListener("keydown", function (e) {
     closeModal(e);
   }
 });
-
-//ouverture deuxieme modal
-const loadModal = async function (url) {
-  const target = "#" + url.split("#")[0];
-  const existingModal = document.querySelector(target);
-  if (existingModal !== null) return existingModal;
-
-  const html = await fetch(url).then((response) => response.text());
-  const element = document
-    .createRange()
-    .createContextualFragment(html)
-    .querySelector(target);
-
-  if (element === null)
-    throw "l'element ${target} n'a pas était trouver dans la page ${url}";
-  document.body.append(element);
-  return element;
-};
-document.querySelectorAll(".js-modal").forEach((a) => {
-  a.addEventListener("click", openModal);
-  //sélectionne chaque lien et permet de mettre un addeventlistener
-});
-document.querySelectorAll("#modale2 a").forEach(function (link) {
-  link.addEventListener("click", function (event) {
-    event.stopPropagation(); // Empêche la propagation de l'événement click
-  });
-  document
-    .getElementById("ajoutPhotoButton")
-    .addEventListener("click", function () {
-      document.getElementById("inputFile").click();
-    });
-});
-
 //fonction pour afficher les travaux dans la modale
 function afficherImagesProjetsDansModale() {
   const modalContent = document.querySelector(".modaleImg");
@@ -249,21 +216,77 @@ function supprimerProjet(projetId) {
       });
   }
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//ouverture deuxieme modal/////////////////////////////////////////////////////////////////////////
+///////////////////////////////
+const loadModal = async function (url) {
+  const target = "#" + url.split("#")[0];
+  const existingModal = document.querySelector(target);
+  if (existingModal !== null) return existingModal;
+
+  const html = await fetch(url).then((response) => response.text());
+  const element = document
+    .createRange()
+    .createContextualFragment(html)
+    .querySelector(target);
+
+  if (element === null)
+    throw "l'element ${target} n'a pas était trouver dans la page ${url}";
+  document.body.append(element);
+  return element;
+};
+document.querySelectorAll(".js-modal").forEach((a) => {
+  a.addEventListener("click", openModal);
+  //sélectionne chaque lien et permet de mettre un addeventlistener
+});
+document.querySelectorAll("#modale2 a").forEach(function (link) {
+  link.addEventListener("click", function (event) {
+    event.stopPropagation(); // Empêche la propagation de l'événement click
+  });
+  //ouverture vers l'explorateur windows au clique sur le btn ajoutphoto
+  document
+    .getElementById("ajoutPhotoButton")
+    .addEventListener("click", function (event) {
+      event.preventDefault(); // Empêche le rechargement de la page par défaut
+      document.getElementById("inputFile").click();
+      document.getElementById("champImage").click(); // Simule un clic sur l'input de type "file"
+    });
+});
+
 //deuxième fonction pour ajouter une photo
 document
-  .getElementById("ajout-image")
-  .addEventListener("submit", function (event) {
-    event.preventDefault(); // Empêche le rechargement de la page par défaut
+  .getElementById("champImage")
+  .addEventListener("change", function (event) {
+    const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
 
-    const photoInput = document.getElementById("div-img");
+    if (file) {
+      const reader = new FileReader();
+      reader.addEventListener("load", function () {
+        const imageSrc = reader.result; // Récupère l'URL de l'image sous forme de texte
+
+        const imageElement = document.createElement("img"); // Crée un nouvel élément image
+        imageElement.src = imageSrc; // Attribue l'URL de l'image à l'attribut src de l'élément image
+
+        document.getElementById("div-img").appendChild(imageElement); // Ajoute l'élément image à la div
+      });
+
+      reader.readAsDataURL(file); // Lit le contenu du fichier image en tant qu'URL de données
+    }
+  });
+/*document
+  .getElementById("champImage")
+  .addEventListener("change", function (event) {
+    const photoInput = event.target;
     const photo = photoInput.files[0]; // Récupère le fichier photo sélectionné par l'utilisateur
-
     if (photo) {
-      // Crée un objet de type FormData pour envoyer les données du formulaire
-      const formData = new FormData();
-      formData.append("imageChoisit", imageChoisit);
-
-      // Effectue une requête POST à l'API pour ajouter la photo
+      const reader = new FileReader(); // Crée un objet FileReader
+      reader.addEventListener("load", function () {
+        const imageDataUrl = reader.result; // Récupère l'URL de l'image sous forme de texte
+        // Met à jour la source de l'image affichée dans la div
+        document.getElementById("imageAffichee").src = imageDataUrl;
+      });
+      reader.readAsDataURL(photo); // Lit le contenu du fichier de la photo en tant qu'URL de données
+      // Autres traitements nécessaires, comme l'envoi de la photo à l'API, etc.
       fetch("http://localhost:5678/api/works", {
         method: "POST",
         body: formData,
@@ -272,7 +295,8 @@ document
           if (response.ok) {
             afficherMessageSucces("Photo ajoutée avec succès");
             // Met à jour la fenêtre modale pour afficher la nouvelle photo
-            // Vous pouvez appeler une fonction appropriée ici
+            photoInput.innerHTML = "";
+            // affichage d'une fonction approprié
           } else {
             afficherMessageErreur("Erreur lors de l'ajout de la photo");
           }
@@ -283,37 +307,15 @@ document
     } else {
       afficherMessageErreur("Veuillez sélectionner une photo");
     }
-  });
-/*function addPhoto() {
-  // Récupérer les valeurs des champs
-  const title = document.getElementById("title").value;
-  const categories = document.getElementById("categories-select").value;
-
-  // Récupérer l'image sélectionnée
-  const imageFile = document.getElementById("champImage").files[0];
-
-  // Créer un nouvel objet FormData
-  const formData = new FormData();
-  formData.append("title", title);
-  formData.append("categories", categories);
-  formData.append("image", imageFile);
-
-  // Utiliser la valeur de l'image comme souhaité
-  console.log("Image sélectionnée :", imageFile);
-
-  fetch("http://localhost:5678/api/works", {
-    method: "POST",
-    body: formData, // Envoyer les données du formulaire
-  })
-    .then((response) => {
-      if (response.ok) {
-        afficherMessageSucces("Projet ajouté avec succès");
-        afficherImagesProjetsDansModale(); // Actualiser la modale pour afficher les projets mis à jour
-      } else {
-        afficherMessageErreur("Erreur lors de l'ajout du projet");
-      }
-    })
-    .catch((error) => {
-      afficherMessageErreur("Erreur lors de l'ajout du projet");
-    });
-}*/
+  });*/
+/*function validationProjetajout(){
+  const titlechamp = document.getElementsByName("title");
+  const selected = (selected = document.getElementsByName("categoriechoisit"));
+  for (validation for users) {
+     const title = document.getElementsByName("title")[0].value;
+     const selection = validation.selection;
+     console.log(validation,categoriechoisit);
+     if (validation !== "téléchargement réussi" || categoriechoisit !== "id valider"){
+      alert("votre titre ou votre catégorie sont incorrectes, veuillez resaisir les bon champs");
+      return;
+    }}};*/
