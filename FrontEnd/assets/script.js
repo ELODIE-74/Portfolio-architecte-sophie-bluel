@@ -186,6 +186,11 @@ document.querySelectorAll("#modale2 a").forEach(function (link) {
   link.addEventListener("click", function (event) {
     event.stopPropagation(); // Empêche la propagation de l'événement click
   });
+  document
+    .getElementById("ajoutPhotoButton")
+    .addEventListener("click", function () {
+      document.getElementById("inputFile").click();
+    });
 });
 
 //fonction pour afficher les travaux dans la modale
