@@ -2,7 +2,7 @@
 let works;
 let categories;
 let positionIndex = 0; //variable position (pour le changement des boutons)
-let modal = null;
+
 let url;
 const logpage = document.getElementById("logpageaccueil");
 const accessToken = localStorage.getItem("accessToken");
@@ -117,80 +117,100 @@ function ecouteClick() {
 ////////////////////////////////////////////
 //partie mode édition modale(x2)/////
 ///////////////////////////////////////////
-//ouverture de la modale
-const openModal = async function (e) {
-  e.preventDefault();
-  const target = this.getAttribute("href"); //code pour ouvrir la modale
-  if (target && target.startsWith("#")) {
-    modal = document.querySelector(target);
-  } else {
-    modal = await loadModal(target);
-  }
-  modal.style.display = null;
-  modal.removeAttribute("aria-hidden");
-  modal.setAttribute("aria-modal", "true");
-  modal.addEventListener("click", closeModal);
-  modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
-  afficherImagesProjetsDansModale("#modale1"); //appel de la fonction pour afficher les travaux dans la première modal
+//éléments nécessaires au fonctionnement de la modale
+const modal = document.querySelector("#modale");
+const modalContents = document.querySelectorAll(".modale-content");
+const modalCloseButtons = document.querySelectorAll(".js-modal-close");
+const modalOpenButtons = document.querySelectorAll(".js-modal");
+const ajoutPhotoButton = document.getElementById("ajoutPhotoButton");
+const modale1 = document.getElementById("modale1");
+const modale2 = document.getElementById("modale2");
+
+// Fonction pour ouvrir la modale
+const openModal = () => {
+  modal.style.display = "block";
+  afficherImagesProjetsDansModale("#modale1");
 };
 
-// Ajout d'un écouteur d'événement au lien de modification
-const modifierLink = document.querySelector(".js-modal");
-modifierLink.addEventListener("click", openModal);
-
-//fermeture de la modale
-const closeModal = function (e) {
-  if (modal === null) return;
-  e.preventDefault();
-  modal.setAttribute("aria-hidden", "true");
-  modal.removeAttribute("aria-modal");
-  modal.removeEventListener("click", closeModal);
-  modal
-    .querySelector(".js-modal-close")
-    .removeEventListener("click", closeModal);
-
-  const hideModal = function () {
-    modal.style.display = "none";
-    //modal = null;
-  };
-  modal.querySelector(".js-modal-close").addEventListener("click", hideModal);
+// Fonction pour fermer la modale
+const closeModal = () => {
+  modal.style.display = "none";
 };
-window.addEventListener("keydown", function (e) {
-  if (e.key === "Escape" || e.key === "Esc") {
-    closeModal(e);
+
+// Ajout des écouteurs d'événements pour les boutons d'ouverture de la modale
+modalOpenButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    openModal();
+    modale1.style.display = "block"; // affichage de la première modale lors de son ouverture
+    modale2.style.display = "none"; // masquage de la deuxème modale lorsque que l'on ouvre la première modale
+  });
+});
+
+// Ajout des écouteurs d'événements pour les boutons de fermeture de la modale
+modalCloseButtons.forEach((button) => {
+  button.addEventListener("click", closeModal);
+});
+
+// Ajout d'un écouteur d'événement pour la fermeture de la modale lorsque l'utilisateur clique en dehors de la modale
+modal.addEventListener("click", (event) => {
+  if (event.target === modal) {
+    closeModal();
   }
 });
+
+// Sélection du lien pour ajouter une photo
+const ajoutPhotoLink = document.querySelector(".ajoutPhotoButton");
+
+// Fonction pour afficher la deuxième modale au clic sur le lien "Ajouter une photo"
+const showModale2 = () => {
+  modale1.style.display = "none"; // Masquer la première modale lorsque vous ouvrez la deuxième modale
+  modale2.style.display = "block"; // Afficher la deuxième modale lorsque vous ouvrez la deuxième modale
+};
+
+// Ajout d'un écouteur d'événement pour afficher la deuxième modale au clic sur le lien "Ajouter une photo"
+ajoutPhotoLink.addEventListener("click", showModale2);
+// Fonction pour afficher la première modale au clic sur la flèche de retour dans la deuxième modale
+const showModale1 = () => {
+  modale2.style.display = "none"; // Masquer la deuxième modale lorsque vous revenez à la première modale
+  modale1.style.display = "block"; // Afficher la première modale lorsque vous revenez à la première modale
+};
+
+// Sélection de la flèche de retour dans la deuxième modale
+const retourButton = document.querySelector(".modale-direction");
+//revoir la classe a sélectionner
+
+// ajout d'un écouteur d'événement pour afficher la première modale au clic sur la flèche de retour dans la deuxième modale
+retourButton.addEventListener("click", showModale1);
 //fonction pour afficher les travaux dans la modale
 function afficherImagesProjetsDansModale() {
   const modalContent = document.querySelector(".modaleImg");
   modalContent.innerHTML = "";
-  // Boucle sur les projets
+  // bouclage pour parcourir les projets
   works.forEach((projet) => {
-    // Créer les éléments nécessaires pour afficher le projet et l'icône de suppression
+    //éléments nécessaires pour afficher le projet et l'icône de suppression
     const projetDiv = document.createElement("div");
     const projetImg = document.createElement("img");
-    const poubelleIcon = document.createElement("img");
+    const poubelleIcon = document.createElement("i");
     // Définir l'URL de l'image du projet
     projetImg.src = projet.imageUrl;
     projetImg.style.width = "80px";
     projetImg.style.height = "100px";
-    // Définir l'icône de la poubelle
-    poubelleIcon.classList.add("iconepoubelle");
-
+    // Définir les classes pour l'icône de la poubelle
+    poubelleIcon.classList.add("fa-solid", "fa-trash-can");
+    projetDiv.appendChild(poubelleIcon);
     poubelleIcon.addEventListener("click", function () {
-      supprimerProjet(projet.id); // Appele une fonction pour supprimer le projet
+      supprimerProjet(projet.id); // Appeler une fonction pour supprimer le projet
     });
-    // Ajoute les éléments au contenu de la modale
+    // Ajouter les éléments au contenu de la modale
     projetDiv.appendChild(projetImg);
     projetDiv.appendChild(poubelleIcon);
     modalContent.appendChild(projetDiv);
-    // Ajoute une nouvelle div avec un identifiant unique pour chaque projet
-    projetDiv.id = `projet-${projet.id}`; // Utilisez l'identifiant du projet comme partie de l'identifiant de la div
+    // Ajouter une nouvelle div avec un identifiant unique pour chaque projet
+    projetDiv.id = `projet-${projet.id}`; // Utiliser l'identifiant du projet comme partie de l'identifiant de la div
     // Définir le fond de la div avec l'URL de l'image
     projetDiv.style.backgroundImage = `url(${projet.imageUrl})`;
   });
 }
-
 function supprimerProjet(projetId) {
   // Demande de confirmation avant la suppression
   if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
@@ -216,46 +236,15 @@ function supprimerProjet(projetId) {
       });
   }
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//ouverture deuxieme modal/////////////////////////////////////////////////////////////////////////
-///////////////////////////////
-const loadModal = async function (url) {
-  const target = "#" + url.split("#")[0];
-  const existingModal = document.querySelector(target);
-  if (existingModal !== null) return existingModal;
 
-  const html = await fetch(url).then((response) => response.text());
-  const element = document
-    .createRange()
-    .createContextualFragment(html)
-    .querySelector(target);
-
-  if (element === null)
-    throw "l'element ${target} n'a pas était trouver dans la page ${url}";
-  document.body.append(element);
-  return element;
-};
-document.querySelectorAll(".js-modal").forEach((a) => {
-  a.addEventListener("click", openModal);
-  //sélectionne chaque lien et permet de mettre un addeventlistener
-});
-document.querySelectorAll("#modale2 a").forEach(function (link) {
-  link.addEventListener("click", function (event) {
-    event.stopPropagation(); // Empêche la propagation de l'événement click
-  });
-  //ouverture vers l'explorateur windows au clique sur le btn ajoutphoto
-  document
-    .getElementById("ajoutPhotoButton")
-    .addEventListener("click", function (event) {
-      event.preventDefault(); // Empêche le rechargement de la page par défaut
-      document.getElementById("inputFile").click();
-      document.getElementById("champImage").click(); // Simule un clic sur l'input de type "file"
-    });
-});
-
-//deuxième fonction pour ajouter une photo
 document
-  .getElementById("champImage")
+  .getElementById("ajoutPhotoButton")
+  .addEventListener("click", function () {
+    document.getElementById("typetelechargerImage").click(); // Simule le clic sur l'élément input[type=file] pour ouvrir la fenêtre de l'explorateur Windows
+  });
+
+document
+  .getElementById("typetelechargerImage")
   .addEventListener("change", function (event) {
     const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
 
@@ -267,25 +256,120 @@ document
         const imageElement = document.createElement("img"); // Crée un nouvel élément image
         imageElement.src = imageSrc; // Attribue l'URL de l'image à l'attribut src de l'élément image
 
-        document.getElementById("div-img").appendChild(imageElement); // Ajoute l'élément image à la div
+        document.querySelector(".div-img").appendChild(imageElement); // Ajoute l'élément image à la div
       });
 
       reader.readAsDataURL(file); // Lit le contenu du fichier image en tant qu'URL de données
     }
   });
+document
+  .getElementById("typetelechargerImage")
+  .addEventListener("change", function (event) {
+    const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file); // Ajoute le fichier image à l'objet FormData
+
+      // Envoie le fichier image à l'API via une requête POST
+      fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            afficherMessageSucces("Photo ajoutée avec succès");
+            // mise à jour de la fenêtre modale pour afficher la nouvelle photo
+            photoInput.innerHTML = "";
+
+            //met a jour la galerie de photo avec la nouvelle image ajouté
+            const imageSrc = URL.createObjectURL(file); // Utilise l'URL de l'objet File pour créer une URL locale
+            const nouvellePhoto = {
+              src: imageSrc,
+              alt: "Description de l'image",
+            };
+            tableauPhotos.push(nouvellePhoto);
+            // mise à jour la galerie de projets avec les nouvelles photos
+            const galerieProjet = document.querySelector(".gallery");
+            galerieProjet.innerHTML = "";
+            tableauPhotos.forEach(function (photo) {
+              const photoElement = document.createElement("img");
+              photoElement.src = photo.src;
+              photoElement.alt = photo.alt;
+              galerieProjet.appendChild(photoElement);
+            });
+          } else {
+            afficherMessageErreur("Erreur lors de l'ajout de la photo");
+          }
+        })
+        .catch((error) => {
+          afficherMessageErreur("Erreur lors de l'ajout de la photo");
+        });
+    } else {
+      afficherMessageErreur("Veuillez sélectionner une photo");
+    }
+  });
 /*document
   .getElementById("champImage")
   .addEventListener("change", function (event) {
-    const photoInput = event.target;
-    const photo = photoInput.files[0]; // Récupère le fichier photo sélectionné par l'utilisateur
-    if (photo) {
-      const reader = new FileReader(); // Crée un objet FileReader
-      reader.addEventListener("load", function () {
-        const imageDataUrl = reader.result; // Récupère l'URL de l'image sous forme de texte
-        // Met à jour la source de l'image affichée dans la div
-        document.getElementById("imageAffichee").src = imageDataUrl;
-      });
-      reader.readAsDataURL(photo); // Lit le contenu du fichier de la photo en tant qu'URL de données
+    const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file); // Ajoute le fichier image à l'objet FormData
+
+      // Envoie le fichier image à l'API via une requête POST
+      fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            afficherMessageSucces("Photo ajoutée avec succès");
+            // Met à jour la fenêtre modale pour afficher la nouvelle photo
+            photoInput.innerHTML = "";
+            // Ajoutez ici le code pour mettre à jour votre galerie de projets avec la nouvelle photo
+            const imageSrc = "URL_DE_LA_NOUVELLE_IMAGE"; // Remplacez par l'URL réelle de la nouvelle image
+            const nouvellePhoto = {
+              src: imageSrc,
+              alt: "Description de l'image",
+            };
+            tableauPhotos.push(nouvellePhoto);
+            // ...
+          } else {
+            afficherMessageErreur("Erreur lors de l'ajout de la photo");
+          }
+        })
+        .catch((error) => {
+          afficherMessageErreur("Erreur lors de l'ajout de la photo");
+        });
+    } else {
+      afficherMessageErreur("Veuillez sélectionner une photo");
+    }
+  });
+*/
+//deuxième fonction pour ajouter une photo
+/*document.getElementById("ajoutPhotoButton").addEventListener("click", function () {
+  document.getElementById("champImage").click(); // Simule le clic sur l'élément input[type=file] pour ouvrir la fenêtre de l'explorateur Windows
+});
+
+document.getElementById("champImage").addEventListener("change", function (event) {
+  const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
+
+  if (file) {
+    const reader = new FileReader();
+    reader.addEventListener("load", function () {
+      const imageSrc = reader.result; // Récupère l'URL de l'image sous forme de texte
+
+      const imageElement = document.createElement("img"); // Crée un nouvel élément image
+      imageElement.src = imageSrc; // Attribue l'URL de l'image à l'attribut src de l'élément image
+
+      document.querySelector(".div-img").appendChild(imageElement); // Ajoute l'élément image à la div
+    });
+
+    reader.readAsDataURL(file); // Lit le contenu du fichier image en tant qu'URL de données
+  }
+
       // Autres traitements nécessaires, comme l'envoi de la photo à l'API, etc.
       fetch("http://localhost:5678/api/works", {
         method: "POST",
@@ -307,15 +391,4 @@ document
     } else {
       afficherMessageErreur("Veuillez sélectionner une photo");
     }
-  });*/
-/*function validationProjetajout(){
-  const titlechamp = document.getElementsByName("title");
-  const selected = (selected = document.getElementsByName("categoriechoisit"));
-  for (validation for users) {
-     const title = document.getElementsByName("title")[0].value;
-     const selection = validation.selection;
-     console.log(validation,categoriechoisit);
-     if (validation !== "téléchargement réussi" || categoriechoisit !== "id valider"){
-      alert("votre titre ou votre catégorie sont incorrectes, veuillez resaisir les bon champs");
-      return;
-    }}};*/
+  );)*/

@@ -66,50 +66,39 @@
         </div>
         <!--Ajout première modale-->
         <aside
-          id="modale1"
+          id="modale"
           class="modal"
           aria-hidden="true"
           role="dialog"
-          aria-labelledby="titremodale"
           style="display: none"
         >
           <div class="modal-wrapper">
-            <h1 class="titremodale">Galerie photo</h1>
-            <a class="js-modal-close">
-              <i class="fa-solid fa-xmark xmodale1"></i>
-            </a>
-            <div id="modaleImg" class="modaleImg">
-              <div class="iconepoubelle">
-                <i class="fa-solid fa-trash-can"></i>
+            <div id="modale1" class="modale-content">
+              <h2 class="titremodale">Galerie photo</h2>
+              <a class="js-modal-close">
+                <i class="fa-solid fa-xmark x-modal"></i>
+              </a>
+              <div id="modaleImg" class="modaleImg">
+                <div class="poubelleIcon">
+                  <i class="fa-solid fa-trash-can"></i>
+                </div>
               </div>
+              <hr />
+              <button class="btn_ajoutphoto">
+                <a href="#modale2" class="ajoutPhotoButton js-modal"
+                  >Ajouter une photo</a
+                >
+              </button>
             </div>
-            <hr />
-            <button class="btn_ajoutphoto js-modal">
-              <a href="#modale2" class="btn_ajoutphoto js-modal"
-                >Ajouter une photo</a
-              >
-            </button>
-          </div>
-          <!-- deuxième modal + ajout photo -->
-          <div
-            id="modale2"
-            class="modal"
-            aria-hidden="true"
-            role="dialog"
-            aria-labelledby="titlemodale"
-            style="display: none"
-          >
-            <!--ajout de la photo -->
-            <div id="modale-ajoutElement" class="modale-ajoutElement">
+
+            <div id="modale2" class="modale-content" style="display: none">
               <div class="modalHaut js-modal-close">
-                <a class="modale-direction" href="./index.html"
-                  ><i class="fa-solid fa-arrow-left" style="color: #000000"></i
-                ></a>
+                <a class="modale-direction" href="#modale1">
+                  <i class="fa-solid fa-arrow-left" style="color: #000000"></i>
+                </a>
                 <i class="fa-solid fa-xmark xmodale2 js-modal-close"></i>
               </div>
-
               <h2 id="titlemodale" class="titre2modale">Ajout photo</h2>
-
               <div id="ajout-image" class="ajout-image">
                 <div class="div-img">
                   <img
@@ -121,27 +110,22 @@
                 </div>
                 <input
                   type="file"
-                  id="champImage"
+                  id="typetelechargerImage"
                   name="image"
                   accept="image/*"
                   style="display: none"
                 />
-
                 <i
                   id="iconeMontagne"
                   class="fa-regular fa-image"
                   style="color: grey"
                 ></i>
-                <a href="#">
-                  <input type="file" id="inputFile" style="display: none" />
-                  <button id="ajoutPhotoButton" class="btn-ajoutphotonew">
-                    + Ajouter photo
-                  </button>
-                </a>
-
+                <button id="ajoutPhotoButton" class="btn-ajoutphotonew">
+                  + Ajouter photo
+                </button>
                 <p class="text-format">jpg,png: 4mo max</p>
               </div>
-              <div class="ajoutElements">
+              <div class="renseignementsAjouts">
                 <label for="title" class="champ">Titre</label>
                 <input
                   type="text"
@@ -152,9 +136,6 @@
                 <label for="categories-select" class="champ">Catégories</label>
                 <select name="categories" class="champ" id="categories-select">
                   <option value="vide"></option>
-                  <option value="objet">Objets</option>
-                  <option value="Appartements">Appartements</option>
-                  <option value="Restaurants">Restaurants</option>
                 </select>
               </div>
               <hr />
