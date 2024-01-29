@@ -239,8 +239,9 @@ function supprimerProjet(projetId) {
 
 document
   .getElementById("ajoutPhotoButton")
-  .addEventListener("click", function () {
-    document.getElementById("typetelechargerImage").click(); // Simule le clic sur l'élément input[type=file] pour ouvrir la fenêtre de l'explorateur Windows
+  .addEventListener("click", function (event) {
+    event.preventDefault(); // Empêche le comportement par défaut du lien
+    document.getElementById("typetelechargerImage").click();
   });
 
 document

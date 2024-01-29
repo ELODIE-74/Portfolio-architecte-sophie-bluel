@@ -451,18 +451,18 @@ hr {
   color: blue;
   margin-bottom: 30px;
 }
-.btn_ajoutphoto {
+.ajoutPhotoButton {
   background-color: #1d6154;
-  width: 180px;
-  height: 30px;
-  font-size: small;
+  width: 220px;
+  height: 100px;
+  font-size: large;
   border-radius: 60px;
   text-align: center;
-  margin-top: 80px;
-}
-.ajoutPhotoButton {
+  margin-top: 100px;
+  padding: 5px;
   color: white;
 }
+
 .modale-ajoutElement {
   position: absolute;
   top: 50%; /* Centrer verticalement */
