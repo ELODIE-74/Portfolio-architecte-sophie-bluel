@@ -163,16 +163,16 @@ const ajoutPhotoLink = document.querySelector(".ajoutPhotoButton");
 
 // Fonction pour afficher la deuxième modale au clic sur le lien "Ajouter une photo"
 const showModale2 = () => {
-  modale1.style.display = "none"; // Masquer la première modale lorsque vous ouvrez la deuxième modale
-  modale2.style.display = "block"; // Afficher la deuxième modale lorsque vous ouvrez la deuxième modale
+  modale1.style.display = "none"; // masque la première modale lorsque j'ouvre la deuxième modale
+  modale2.style.display = "block"; // affiche la deuxième modale lorsque j'ouvre la deuxième modale
 };
 
 // Ajout d'un écouteur d'événement pour afficher la deuxième modale au clic sur le lien "Ajouter une photo"
 ajoutPhotoLink.addEventListener("click", showModale2);
 // Fonction pour afficher la première modale au clic sur la flèche de retour dans la deuxième modale
 const showModale1 = () => {
-  modale2.style.display = "none"; // Masquer la deuxième modale lorsque vous revenez à la première modale
-  modale1.style.display = "block"; // Afficher la première modale lorsque vous revenez à la première modale
+  modale2.style.display = "none"; // masque la deuxième modale lorsque l'on revient à la première modale
+  modale1.style.display = "block"; // affiche la première modale lorsque l'on revient à la première modale
 };
 
 // Sélection de la flèche de retour dans la deuxième modale
@@ -191,32 +191,32 @@ function afficherImagesProjetsDansModale() {
     const projetDiv = document.createElement("div");
     const projetImg = document.createElement("img");
     const poubelleIcon = document.createElement("i");
-    // Définir l'URL de l'image du projet
+    // définition de l'URL de l'image du projet
     projetImg.src = projet.imageUrl;
     projetImg.style.width = "80px";
     projetImg.style.height = "100px";
-    // Définir les classes pour l'icône de la poubelle
+    // définition des classes pour l'icône de la poubelle
     poubelleIcon.classList.add("fa-solid", "fa-trash-can");
     projetDiv.appendChild(poubelleIcon);
     poubelleIcon.addEventListener("click", function () {
-      supprimerProjet(projet.id); // Appeler une fonction pour supprimer le projet
+      supprimerProjet(projet.id); // appel une fonction pour supprimer le projet
     });
-    // Ajouter les éléments au contenu de la modale
+    // ajout des éléments au contenu de la modale
     projetDiv.appendChild(projetImg);
     projetDiv.appendChild(poubelleIcon);
     modalContent.appendChild(projetDiv);
-    // Ajouter une nouvelle div avec un identifiant unique pour chaque projet
+    // ajoute une nouvelle div avec un identifiant unique pour chaque projet
     projetDiv.id = `projet-${projet.id}`; // Utiliser l'identifiant du projet comme partie de l'identifiant de la div
-    // Définir le fond de la div avec l'URL de l'image
+    // définit le fond de la div avec l'URL de l'image
     projetDiv.style.backgroundImage = `url(${projet.imageUrl})`;
   });
 }
 function supprimerProjet(projetId) {
   // Demande de confirmation avant la suppression
   if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
-    // Récupérer le token de l'utilisateur
+    // récupérer le token de l'utilisateur(accès d'autorisation)
     const accessToken = localStorage.getItem("accessToken");
-    // Envoyer une requête DELETE à l'API pour supprimer le projet avec le token dans l'en-tête
+    // envoie une requête DELETE à l'API pour supprimer le projet avec le token dans l'en-tête
     fetch(`http://localhost:5678/api/works/${projetId}`, {
       method: "DELETE",
       headers: {
@@ -226,7 +226,7 @@ function supprimerProjet(projetId) {
       .then((response) => {
         if (response.ok) {
           afficherMessageSucces("Projet supprimé avec succès");
-          afficherImagesProjetsDansModale(); // Actualiser la modale pour afficher les projets mis à jour
+          afficherImagesProjetsDansModale(); //actualise la modale pour afficher les projets mis à jour
         } else {
           afficherMessageErreur("Erreur lors de la suppression du projet");
         }
@@ -252,9 +252,15 @@ document
       const reader = new FileReader();
       reader.addEventListener("load", function () {
         const imageSrc = reader.result; // Récupère l'URL de l'image sous forme de texte
+        const elementsAMasquer = document.querySelector(".elements-a-masquer");
+        elementsAMasquer.style.zIndex = "-1"; // Masque les éléments
 
         const imageElement = document.createElement("img"); // Crée un nouvel élément image
         imageElement.src = imageSrc; // Attribue l'URL de l'image à l'attribut src de l'élément image
+        imageElement.style.width = "180px";
+        imageElement.style.height = "200px";
+        imageElement.style.marginTop = "84px";
+        imageElement.style.zIndex = "6";
 
         document.querySelector(".div-img").appendChild(imageElement); // Ajoute l'élément image à la div
       });
