@@ -433,6 +433,7 @@ a {
   margin-left: 20px;
   margin-right: 20px;
 }
+/*css icone de la poubelle*/
 .fa-trash-can {
   width: 20px;
   height: 20px;
@@ -444,13 +445,16 @@ a {
   right: 10px;
   cursor: pointer;
 }
+/*css fermeture modale x*/
 .x-modal {
   margin-left: 550px;
 }
+/*trait de séparation*/
 hr {
   color: blue;
   margin-bottom: 30px;
 }
+/*lien pour ouvrir la deuxième modale*/
 .ajoutPhotoButton {
   background-color: #1d6154;
   width: 220px;
@@ -463,12 +467,12 @@ hr {
   color: white;
 }
 
-.modale-ajoutElement {
+/*.modale-ajoutElement {
   position: absolute;
   top: 50%; /* Centrer verticalement */
-  left: 50%; /* Centrer horizontalement */
-  transform: translate(-50%, -50%); /* Ajustement pour centrer correctement */
-  background-color: white;
+/* left: 50%; /* Centrer horizontalement */
+/*transform: translate(-50%, -50%); /* Ajustement pour centrer correctement */
+/*background-color: white;
   border-radius: 10px;
   padding: 30px;
   max-width: calc(100vw - 20px);
@@ -476,14 +480,14 @@ hr {
   overflow: auto;
   width: 600px;
   height: 600px;
-}
+}*/
 
 .titremodale {
   color: black;
   font-weight: lighter;
   padding-top: 15px;
 }
-
+/*css deuxième modale fleche+croix*/
 .modalHaut {
   display: flex;
   justify-content: space-between;
@@ -495,6 +499,7 @@ hr {
 .titre2modale {
   color: black;
 }
+/*grande div conteneur qui contient tous les éléments*/
 .ajout-image {
   display: flex;
   flex-direction: column;
@@ -502,21 +507,23 @@ hr {
   margin-bottom: 20px;
   background-color: #add8e6;
   width: 450px;
-  margin-left: 60px;
+  margin-left: 10px;
 }
+/*position texte div conteneur image*/
 .ajout-image p {
   color: grey;
   margin-bottom: 20px;
+  margin-top: 15px;
 }
 .div-img {
   width: 200px;
-  height: 200px;
+  height: 205px;
   margin-bottom: 10px;
-  margin: 0px;
 }
+/*css icone montagne design origine avant chargement photo*/
 .div-img,
 .fa-image {
-  margin-top: -85px;
+  margin-top: -80px;
 }
 .fa-image {
   width: 100%;
@@ -525,12 +532,14 @@ hr {
   justify-content: center;
   font-size: 80px;
 }
+
+/*css bouton d'ajout de la photo*/
 .btn-ajoutphotonew {
   color: #77b5f2;
   text-align: center;
   text-decoration: none;
   padding: 5px 10px;
-  background-color: grey;
+  background-color: #a9cbd7;
   border-radius: 60px;
   width: 180px;
   height: 30px;
@@ -541,32 +550,49 @@ hr {
   position: relative;
   z-index: 1;
 }
+/*css pour les champs de renseignements*/
 .renseignementsAjouts {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+.renseignementsAjouts label {
+  display: flex;
+  justify-items: flex-start;
+}
 .champ {
   width: 450px;
   color: black;
   margin-top: 15px;
-  margin-right: 15px;
 }
 
+input[type="text"],
+select.champ {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  margin-bottom: 30px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
 hr {
   color: blue;
-  margin-top: 60px;
+  margin-top: 10px;
 }
+/*css bouton de validation à la fin*/
 .btn_valider {
   color: white;
   background-color: grey;
   width: 180px;
-  height: 30px;
-  font-size: small;
+  padding: 10px;
+  font-size: medium;
   border-radius: 60px;
   text-align: center;
-  margin-top: 40px;
-  margin-left: 200px;
+  margin-left: 30px;
   border: none;
+  display: inline-block; /*régle les problème de hauteurs design css*/
+  line-height: 20px;
 }

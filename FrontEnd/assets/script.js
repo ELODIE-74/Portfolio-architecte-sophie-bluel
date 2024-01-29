@@ -43,6 +43,15 @@ fetch("http://localhost:5678/api/categories")
   .then((response) => response.json())
   //on récupère ensuite les données
   .then((categoriesData) => {
+    //partie afficher dans la deuxième modale champ de sélection
+    const categoriesSelect = document.getElementById("categories-select");
+    categoriesData.forEach((category) => {
+      let option = document.createElement("option"); //balise option emplacement
+      option.value = category.id;
+      option.text = category.name; //va de catégorie en catégorie pour la sélection
+      categoriesSelect.appendChild(option); //on lie option à la sélection des catégorie
+    });
+    //fin affichage sélection deuxième modale
     categories = new Set(categoriesData); //données de la catégorie
     const filtres = document.getElementById("Filtres"); //variable globale qui récupérer les filtres
     for (categorie of categories) {
@@ -216,9 +225,10 @@ function supprimerProjet(projetId) {
   if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
     // récupérer le token de l'utilisateur(accès d'autorisation)
     const accessToken = localStorage.getItem("accessToken");
-    // envoie une requête DELETE à l'API pour supprimer le projet avec le token dans l'en-tête
-    fetch(`http://localhost:5678/api/works/${projetId}`, {
-      method: "DELETE",
+    // Envoie le fichier image à l'API via une requête POST
+    fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      body: formData,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -259,7 +269,7 @@ document
         const imageElement = document.createElement("img"); // Crée un nouvel élément image
         imageElement.src = imageSrc; // Attribue l'URL de l'image à l'attribut src de l'élément image
         imageElement.style.width = "180px";
-        imageElement.style.height = "200px";
+        imageElement.style.height = "210px";
         imageElement.style.marginTop = "84px";
         imageElement.style.zIndex = "6";
 
@@ -278,25 +288,37 @@ document
       const formData = new FormData();
       formData.append("image", file); // Ajoute le fichier image à l'objet FormData
 
+      const accessToken = localStorage.getItem("accessToken");
       // Envoie le fichier image à l'API via une requête POST
       fetch("http://localhost:5678/api/works", {
         method: "POST",
         body: formData,
+        Authorization: `Bearer ${accessToken}`,
       })
         .then((response) => {
           if (response.ok) {
+            // Au moment d'afficher le message dans la modale
             afficherMessageSucces("Photo ajoutée avec succès");
-            // mise à jour de la fenêtre modale pour afficher la nouvelle photo
-            photoInput.innerHTML = "";
 
-            //met a jour la galerie de photo avec la nouvelle image ajouté
+            // Empêcher la fermeture automatique de la modale
+            const modal = document.getElementById("modale1"); // Remplacez "modale1" par l'ID réel de votre modale
+            modal.addEventListener("click", function (event) {
+              event.stopPropagation();
+            });
+
+            // Mise à jour de la fenêtre modale pour afficher la nouvelle photo
+            const photoInput = document.getElementById("typetelechargerImage"); // Remplacez "typetelechargerImage" par l'ID réel de votre input file
+            photoInput.value = ""; // Réinitialise la valeur de l'input file pour permettre de sélectionner une nouvelle image
+
+            // Met à jour la galerie de photo avec la nouvelle image ajoutée
             const imageSrc = URL.createObjectURL(file); // Utilise l'URL de l'objet File pour créer une URL locale
             const nouvellePhoto = {
               src: imageSrc,
               alt: "Description de l'image",
             };
             tableauPhotos.push(nouvellePhoto);
-            // mise à jour la galerie de projets avec les nouvelles photos
+
+            // Mise à jour de la galerie de projets avec les nouvelles photos
             const galerieProjet = document.querySelector(".gallery");
             galerieProjet.innerHTML = "";
             tableauPhotos.forEach(function (photo) {
@@ -316,86 +338,14 @@ document
       afficherMessageErreur("Veuillez sélectionner une photo");
     }
   });
-/*document
-  .getElementById("champImage")
-  .addEventListener("change", function (event) {
-    const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
+function afficherMessageErreur(message) {
+  const messageErreur = document.getElementById("message-erreur");
+  messageErreur.textContent = message;
+  messageErreur.style.display = "block";
+}
 
-    if (file) {
-      const formData = new FormData();
-      formData.append("image", file); // Ajoute le fichier image à l'objet FormData
-
-      // Envoie le fichier image à l'API via une requête POST
-      fetch("http://localhost:5678/api/works", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => {
-          if (response.ok) {
-            afficherMessageSucces("Photo ajoutée avec succès");
-            // Met à jour la fenêtre modale pour afficher la nouvelle photo
-            photoInput.innerHTML = "";
-            // Ajoutez ici le code pour mettre à jour votre galerie de projets avec la nouvelle photo
-            const imageSrc = "URL_DE_LA_NOUVELLE_IMAGE"; // Remplacez par l'URL réelle de la nouvelle image
-            const nouvellePhoto = {
-              src: imageSrc,
-              alt: "Description de l'image",
-            };
-            tableauPhotos.push(nouvellePhoto);
-            // ...
-          } else {
-            afficherMessageErreur("Erreur lors de l'ajout de la photo");
-          }
-        })
-        .catch((error) => {
-          afficherMessageErreur("Erreur lors de l'ajout de la photo");
-        });
-    } else {
-      afficherMessageErreur("Veuillez sélectionner une photo");
-    }
-  });
-*/
-//deuxième fonction pour ajouter une photo
-/*document.getElementById("ajoutPhotoButton").addEventListener("click", function () {
-  document.getElementById("champImage").click(); // Simule le clic sur l'élément input[type=file] pour ouvrir la fenêtre de l'explorateur Windows
-});
-
-document.getElementById("champImage").addEventListener("change", function (event) {
-  const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
-
-  if (file) {
-    const reader = new FileReader();
-    reader.addEventListener("load", function () {
-      const imageSrc = reader.result; // Récupère l'URL de l'image sous forme de texte
-
-      const imageElement = document.createElement("img"); // Crée un nouvel élément image
-      imageElement.src = imageSrc; // Attribue l'URL de l'image à l'attribut src de l'élément image
-
-      document.querySelector(".div-img").appendChild(imageElement); // Ajoute l'élément image à la div
-    });
-
-    reader.readAsDataURL(file); // Lit le contenu du fichier image en tant qu'URL de données
-  }
-
-      // Autres traitements nécessaires, comme l'envoi de la photo à l'API, etc.
-      fetch("http://localhost:5678/api/works", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => {
-          if (response.ok) {
-            afficherMessageSucces("Photo ajoutée avec succès");
-            // Met à jour la fenêtre modale pour afficher la nouvelle photo
-            photoInput.innerHTML = "";
-            // affichage d'une fonction approprié
-          } else {
-            afficherMessageErreur("Erreur lors de l'ajout de la photo");
-          }
-        })
-        .catch((error) => {
-          afficherMessageErreur("Erreur lors de l'ajout de la photo");
-        });
-    } else {
-      afficherMessageErreur("Veuillez sélectionner une photo");
-    }
-  );)*/
+function afficherMessageSucces(message) {
+  const messageSucces = document.getElementById("message-succes");
+  messageSucces.textContent = message;
+  messageSucces.style.display = "block";
+}
