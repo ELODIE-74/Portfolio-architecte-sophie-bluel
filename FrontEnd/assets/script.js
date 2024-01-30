@@ -248,3 +248,40 @@ function supprimerProjet(projetDiv) {
       });
   }
 }
+document
+  .getElementById("ajoutPhotoButton")
+  .addEventListener("click", function (event) {
+    event.preventDefault(); // Empêche le comportement par défaut du lien
+    document.getElementById("typetelechargerImage").click();
+  });
+//pour l'ajout d'ume image, code qui sélectionne l'image et la place dans la div prévu à cet effet
+document
+  .getElementById("typetelechargerImage")
+  .addEventListener("change", function (event) {
+    const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
+
+    if (file) {
+      const reader = new FileReader();
+      reader.addEventListener("load", function () {
+        const imageSrc = reader.result; // Récupère l'URL de l'image sous forme de texte
+        const elementsAMasquer = document.querySelector(".elements-a-masquer");
+        elementsAMasquer.style.zIndex = "-1"; // Masque les éléments
+
+        const imageElement = document.createElement("img"); // Crée un nouvel élément image
+        imageElement.src = imageSrc; // Attribue l'URL de l'image à l'attribut src de l'élément image
+        imageElement.style.width = "180px";
+        imageElement.style.height = "210px";
+        imageElement.style.marginTop = "84px";
+        imageElement.style.zIndex = "6";
+
+        document.querySelector(".div-img").appendChild(imageElement); // Ajoute l'élément image à la div
+      });
+
+      reader.readAsDataURL(file); // Lit le contenu du fichier image en tant qu'URL de données
+    }
+  });
+document
+  .getElementById("typetelechargerImage")
+  .addEventListener("change", function (event) {
+    const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
+  });
