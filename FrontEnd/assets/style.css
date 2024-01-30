@@ -551,18 +551,19 @@ hr {
   z-index: 1;
 }
 /*css pour les champs de renseignements*/
-.renseignementsAjouts {
+#modale2 form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-left: -20px;
 }
-.renseignementsAjouts label {
+#modale2 form label {
   display: flex;
   justify-items: flex-start;
 }
 .champ {
-  width: 450px;
+  width: 430px;
   color: black;
   margin-top: 15px;
 }

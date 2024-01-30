@@ -283,23 +283,22 @@ document
   .addEventListener("change", function (event) {
     const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
   });
-//envoyer le formulaire à l'Api
-// Récupérez les informations du formulaire
+// récupération des informations du formulaire
 const form = document.getElementById("monFormulaire");
 console.log(form);
-// Assurez-vous que l'élément récupéré est bien un formulaire HTML
+// élément récupérer soit conforme au html
 if (form instanceof HTMLFormElement) {
   const formData = new FormData(form);
-  // Ajoutez le token d'authentification à l'en-tête de la requête
-  // Get the token
-  const token = sessionStorage.getItem("token");
+  // ajout du token d'authentification à l'en-tête de la requête
+  // prendre le token
+  const accessToken = localStorage.getItem("accessToken");
 
-  // Send data to the server with an HTTP POST request
+  //envoie des données au serveur HTTP POST requette
   fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     body: formData,
   })
@@ -310,3 +309,37 @@ if (form instanceof HTMLFormElement) {
     })
     .catch((error) => console.error("Error", error));
 }
+
+/*const form = document.getElementById("monFormulaire");
+console.log(form);
+// élément récupérer soit conforme au html
+if (form instanceof HTMLFormElement) {
+  const formData = new FormData(form);
+  //envoyer le formulaire à l'Api
+  const urlProjet = "http://localhost:5678/api/works";
+  const token = localStorage.getItem("accessToken");
+
+  // Ajoutez les données du formulaire à l'objet FormData
+
+  // En-têtes de la requête POST
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+  };
+  // Options de la requête POST
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: formData,
+  };
+  // Envoi de la requête POST
+  fetch(url, options)
+    .then((response) => {
+      if (response.ok) {
+        modaleAlert("succés du téléchargement", data);
+      }
+      // Faites quelque chose avec la réponse de l'API (par exemple, mettre à jour la galerie)
+    })
+    .catch((error) => {
+      console.error("Erreur lors de l'ajout du projet :", error);
+    });
+}*/
