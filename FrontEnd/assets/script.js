@@ -226,9 +226,8 @@ function supprimerProjet(projetId) {
     // récupérer le token de l'utilisateur(accès d'autorisation)
     const accessToken = localStorage.getItem("accessToken");
     // Envoie le fichier image à l'API via une requête POST
-    fetch("http://localhost:5678/api/works", {
-      method: "POST",
-      body: formData,
+    fetch("http://localhost:5678/api/works${projetID}", {
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -279,7 +278,7 @@ document
       reader.readAsDataURL(file); // Lit le contenu du fichier image en tant qu'URL de données
     }
   });
-document
+/*document
   .getElementById("typetelechargerImage")
   .addEventListener("change", function (event) {
     const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
@@ -292,8 +291,6 @@ document
       // Envoie le fichier image à l'API via une requête POST
       fetch("http://localhost:5678/api/works", {
         method: "POST",
-        body: formData,
-        Authorization: `Bearer ${accessToken}`,
       })
         .then((response) => {
           if (response.ok) {
@@ -337,8 +334,8 @@ document
     } else {
       afficherMessageErreur("Veuillez sélectionner une photo");
     }
-  });
-function afficherMessageErreur(message) {
+  });*/
+/*function afficherMessageErreur(message) {
   const messageErreur = document.getElementById("message-erreur");
   messageErreur.textContent = message;
   messageErreur.style.display = "block";
@@ -348,4 +345,4 @@ function afficherMessageSucces(message) {
   const messageSucces = document.getElementById("message-succes");
   messageSucces.textContent = message;
   messageSucces.style.display = "block";
-}
+}*/
