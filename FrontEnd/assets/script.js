@@ -128,8 +128,6 @@ function ecouteClick() {
 ///////////////////////////////////////////
 //ouverture de la modale
 // Sélection des éléments nécessaires au fonctionnement de la modale
-
-//éléments nécessaires au fonctionnement de la modale
 const modal = document.querySelector("#modale");
 const modalContents = document.querySelectorAll(".modale-content");
 const modalCloseButtons = document.querySelectorAll(".js-modal-close");
@@ -157,7 +155,6 @@ modalOpenButtons.forEach((button) => {
     modale2.style.display = "none"; // masquage de la deuxème modale lorsque que l'on ouvre la première modale
   });
 });
-
 // Ajout des écouteurs d'événements pour les boutons de fermeture de la modale
 modalCloseButtons.forEach((button) => {
   button.addEventListener("click", closeModal);
@@ -190,9 +187,10 @@ const showModale1 = () => {
 // Sélection de la flèche de retour dans la deuxième modale
 const retourButton = document.querySelector(".modale-direction");
 //revoir la classe a sélectionner
-
 // ajout d'un écouteur d'événement pour afficher la première modale au clic sur la flèche de retour dans la deuxième modale
 retourButton.addEventListener("click", showModale1);
+//fonction pour afficher les travaux dans la modale
+
 //fonction pour afficher les travaux dans la modale
 function afficherImagesProjetsDansModale() {
   const modalContent = document.querySelector(".modaleImg");
@@ -285,3 +283,30 @@ document
   .addEventListener("change", function (event) {
     const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
   });
+//envoyer le formulaire à l'Api
+// Récupérez les informations du formulaire
+const form = document.getElementById("monFormulaire");
+console.log(form);
+// Assurez-vous que l'élément récupéré est bien un formulaire HTML
+if (form instanceof HTMLFormElement) {
+  const formData = new FormData(form);
+  // Ajoutez le token d'authentification à l'en-tête de la requête
+  // Get the token
+  const token = sessionStorage.getItem("token");
+
+  // Send data to the server with an HTTP POST request
+  fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+    .then((response) => {
+      if (response.ok) {
+        modaleAlert("succés du téléchargement");
+      }
+    })
+    .catch((error) => console.error("Error", error));
+}
