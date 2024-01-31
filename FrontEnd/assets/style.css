@@ -428,7 +428,7 @@ a {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding-top: 10px;
+  padding-top: 60px;
   gap: 10px;
   margin-left: 20px;
   margin-right: 20px;
@@ -446,9 +446,15 @@ a {
   cursor: pointer;
 }
 /*css fermeture modale x*/
+
 .x-modal {
-  margin-left: 550px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -65px;
 }
+/*.modale-content {
+  display: none;
+}*/
 /*trait de séparation*/
 hr {
   color: blue;
@@ -596,4 +602,8 @@ hr {
   border: none;
   display: inline-block; /*régle les problème de hauteurs design css*/
   line-height: 20px;
+}
+/*pour assombrir l'arrière-plan en mode connexion*/
+.dim-background {
+  background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond semi-transparente */
 }

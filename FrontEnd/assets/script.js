@@ -139,12 +139,14 @@ const modale2 = document.getElementById("modale2");
 // Fonction pour ouvrir la modale
 const openModal = () => {
   modal.style.display = "block";
+  document.body.classList.add("dim-background"); //assombrir le site en mode édition
   afficherImagesProjetsDansModale("#modale1");
 };
 
 // Fonction pour fermer la modale
 const closeModal = () => {
   modal.style.display = "none";
+  document.body.classList.remove("dim-background"); //enelever l'assombrissement quand on sort de la modale
 };
 
 // Ajout des écouteurs d'événements pour les boutons d'ouverture de la modale
@@ -168,15 +170,17 @@ modal.addEventListener("click", (event) => {
 });
 
 // Sélection du lien pour ajouter une photo
-const ajoutPhotoLink = document.querySelector(".ajoutPhotoButton");
+//const ajoutPhotoLink = document.querySelector(".ajoutPhotoButton");
 
 // Fonction pour afficher la deuxième modale au clic sur le lien "Ajouter une photo"
-const showModale2 = () => {
-  modale1.style.display = "none"; // masque la première modale lorsque j'ouvre la deuxième modale
-  modale2.style.display = "block"; // affiche la deuxième modale lorsque j'ouvre la deuxième modale
+const showModale2 = (event) => {
+  event.preventDefault();
+  modale1.style.display = "none";
+  modale2.style.display = "block";
 };
 
 // Ajout d'un écouteur d'événement pour afficher la deuxième modale au clic sur le lien "Ajouter une photo"
+const ajoutPhotoLink = document.getElementById("ajoutPhotoLink");
 ajoutPhotoLink.addEventListener("click", showModale2);
 // Fonction pour afficher la première modale au clic sur la flèche de retour dans la deuxième modale
 const showModale1 = () => {
@@ -184,7 +188,7 @@ const showModale1 = () => {
   modale1.style.display = "block"; // affiche la première modale lorsque l'on revient à la première modale
 };
 
-// Sélection de la flèche de retour dans la deuxième modale
+// Sélection de la flèche de retour dans la deuxième modale et va sur la deuxième modale
 const retourButton = document.querySelector(".modale-direction");
 //revoir la classe a sélectionner
 // ajout d'un écouteur d'événement pour afficher la première modale au clic sur la flèche de retour dans la deuxième modale
@@ -278,36 +282,38 @@ document
       reader.readAsDataURL(file); // Lit le contenu du fichier image en tant qu'URL de données
     }
   });
-document
-  .getElementById("typetelechargerImage")
-  .addEventListener("change", function (event) {
-    const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
-  });
-// récupération des informations du formulaire
-const form = document.getElementById("monFormulaire");
-console.log(form);
-// élément récupérer soit conforme au html
-if (form instanceof HTMLFormElement) {
-  const formData = new FormData(form);
-  // ajout du token d'authentification à l'en-tête de la requête
-  // prendre le token
-  const accessToken = localStorage.getItem("accessToken");
 
-  //envoie des données au serveur HTTP POST requette
-  fetch("http://localhost:5678/api/works", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: formData,
-  })
-    .then((response) => {
-      if (response.ok) {
-        modaleAlert("succés du téléchargement");
-      }
+function envoieDonneesApi() {
+  document
+    .getElementById("typetelechargerImage")
+    .addEventListener("change", function (event) {
+      const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
+    });
+  // récupération des informations du formulaire
+  const form = document.getElementById("monFormulaire");
+  console.log(form);
+  // élément récupérer soit conforme au html
+  if (form instanceof HTMLFormElement) {
+    const formData = new FormData(form);
+    // ajout du token d'authentification à l'en-tête de la requête
+    const token = sessionStorage.getItem("accessToken");
+
+    //envoie des données au serveur HTTP POST requette pour l'ajout d'un nouveau projet
+    fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
     })
-    .catch((error) => console.error("Error", error));
+      .then((response) => {
+        if (response.ok) {
+          modaleAlert("succés du téléchargement");
+        }
+      })
+      .catch((error) => console.error("Error", error));
+  }
 }
 
 /*const form = document.getElementById("monFormulaire");
