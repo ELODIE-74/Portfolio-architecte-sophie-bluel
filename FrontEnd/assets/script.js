@@ -36,6 +36,7 @@ fetch("http://localhost:5678/api/works")
     const gallery = document.querySelector(".gallery"); //récupére les élemnts de la galerie
     displayWorks(works); // Appel de la fonction displayWorks avec les données récupérées
     console.table(works); //affichage de tous les projets(works)
+    envoieDonneesApi();
   });
 
 fetch("http://localhost:5678/api/categories")
@@ -295,8 +296,12 @@ function envoieDonneesApi() {
   // élément récupérer soit conforme au html
   if (form instanceof HTMLFormElement) {
     const formData = new FormData(form);
+    formData.append(
+      "image",
+      document.getElementById("typetelechargerImage").value
+    );
     // ajout du token d'authentification à l'en-tête de la requête
-    const token = sessionStorage.getItem("accessToken");
+    const token = localStorage.getItem("accessToken");
 
     //envoie des données au serveur HTTP POST requette pour l'ajout d'un nouveau projet
     fetch("http://localhost:5678/api/works", {
@@ -343,7 +348,7 @@ if (form instanceof HTMLFormElement) {
       if (response.ok) {
         modaleAlert("succés du téléchargement", data);
       }
-      // Faites quelque chose avec la réponse de l'API (par exemple, mettre à jour la galerie)
+      
     })
     .catch((error) => {
       console.error("Erreur lors de l'ajout du projet :", error);
