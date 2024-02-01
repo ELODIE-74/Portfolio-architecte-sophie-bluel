@@ -36,7 +36,6 @@ fetch("http://localhost:5678/api/works")
     const gallery = document.querySelector(".gallery"); //récupére les élemnts de la galerie
     displayWorks(works); // Appel de la fonction displayWorks avec les données récupérées
     console.table(works); //affichage de tous les projets(works)
-    envoieDonneesApi();
   });
 
 fetch("http://localhost:5678/api/categories")
@@ -224,6 +223,7 @@ function afficherImagesProjetsDansModale() {
     projetDiv.id = `projet-${projet.id}`; // Utiliser l'identifiant du projet comme partie de l'identifiant de la div
     // Définir le fond de la div avec l'URL de l'image
     projetDiv.style.backgroundImage = `url(${projet.imageUrl})`;
+    envoyerFormulaire();
   });
 }
 function supprimerProjet(projetDiv) {
@@ -283,15 +283,306 @@ document
       reader.readAsDataURL(file); // Lit le contenu du fichier image en tant qu'URL de données
     }
   });
+const envoyerButton = document.getElementById("boutonValidation");
+envoyerButton.addEventListener("click", envoyerFormulaire);
+function envoyerFormulaire() {
+  //event.preventDefault(); // empêche le comportement par défaut du lien
+  const form = document.getElementById("monFormulaire");
+  if (form instanceof HTMLFormElement) {
+    const formData = new FormData(form);
+    const token = localStorage.getItem("accessToken");
+    fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then((response) => {
+        if (response.ok) {
+          modaleAlert("Succès du téléchargement");
+          return response.json();
+        } else {
+          throw new Error("Erreur lors de l'envoi du formulaire");
+        }
+      })
+      .then((data) => {
+        // manipulations des données
+        const nouveauProjet = data.work;
+        const projetHTML = genererProjetHTML(works);
+        const galerieProjet = document.getElementById("gallery");
+        galerieProjet.insertAdjacentHTML("beforeend", projetHTML);
+      })
+      .catch((error) => {
+        console.error("Erreur", error);
+      });
+  }
+}
+/*const form = document.getElementById("monFormulaire");
+console.log(form);
+// élément récupérer soit conforme au html
+if (form instanceof HTMLFormElement) {
+  const formData = new FormData();
+  formData.append(
+    "image",
+    document.getElementById("typetelechargerImage").value
+  );
+  formData.append("title", title);
+  formData.append(
+    "category",
+    document.getElementById("categories-select").value
+  );
 
-function envoieDonneesApi() {
+  // ajout du token d'authentification à l'en-tête de la requête
+  const token = localStorage.getItem("accessToken");
+
+  //envoie des données au serveur HTTP POST requette pour l'ajout d'un nouveau projet
+  fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+    .then((response) => {
+      if (response.ok) {
+        modaleAlert("succés du téléchargement");
+        return works;
+      }
+    })
+    .catch((error) => console.error("Error", error));
+}*/
+
+/*const envoyerProjet = async () => {
+  const formData = new FormData(document.querySelector(".uploadForm"));
+  const url = "http://localhost:5678/api/work";
+  const init = {
+    method: "POST",
+    body: formData,
+  };
+  try {
+    const response = await fetch(url, init);
+    if (response.ok) {
+      // La requête a réussi
+      console.log("Données envoyées avec succès !");
+
+      // Met à jour la galerie dans la modale
+      mettreAJourGalerie();
+
+      // Met à jour la galerie sur le site
+      mettreAJourGalerieSite();
+      const galerieModale = document.querySelector(".modaleImg");
+      galerieModale.innerHTML = ""; // Efface les projets actuels
+      mettreAJourGalerie();
+      alert("Nouveau projet envoyé !");
+    } else {
+      // La requête a échoué
+      console.error(
+        "Erreur lors de l'envoi des données à l'API :",
+        response.status
+      );
+      alert("Erreur lors de l'envoi du projet");
+    }
+  } catch (error) {
+    console.error("Erreur lors de l'envoi des données à l'API :", error);
+    alert("Erreur lors de l'envoi du projet : " + error);
+  }
+};
+document.querySelector(".uploadForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  envoyerProjet();
+});*/
+// ...
+/*fetch(url, init)
+ .then((response) => {
+   if (response.ok) {
+     // La requête a réussi
+     console.log("Données envoyées avec succès !");
+     // Met à jour la galerie dans la modale
+     mettreAJourGalerie();
+     // Met à jour la galerie sur le site
+     mettreAJourGalerieSite();
+     const galerieModale = document.querySelector(".modaleImg");
+     galerieModale.innerHTML = ""; // Efface les projets actuels
+     mettreAJourGalerie();
+     alert("Nouveau projet envoyé !");
+   } else {
+     // La requête a échoué
+     console.error(
+       "Erreur lors de l'envoi des données à l'API :",
+       response.status
+     );
+     alert("Erreur lors de l'envoi du projet");
+   }
+ })
+ .catch((error) => {
+   console.error("Erreur lors de l'envoi des données à l'API :", error);
+   alert("Erreur lors de l'envoi du projet : " + error);
+ });*/
+/*function envoieDonneesApi(image, titre, id) {
+  const formData = new FormData();
+  formData.append("image", image);
+  formData.append("title", titre);
+  formData.append("id", id);
+
+  // Récupère le token d'accès depuis le localStorage (assurez-vous que le token est correctement stocké lors de l'authentification)
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    console.error("Token d'accès introuvable.");
+    return;
+  }
+
+  // Effectue la requête POST à l'API avec le token d'accès dans l'en-tête
+  const url = "http://localhost:5678/api/works";
+  const init = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  };
+
+  fetch(url, init)
+    .then((response) => {
+      if (response.ok) {
+        // La requête a réussi
+        console.log("Données envoyées avec succès !");
+        // Met à jour la galerie dans la modale
+        mettreAJourGalerie();
+        // Met à jour la galerie sur le site
+        mettreAJourGalerieSite();
+        const galerieModale = document.querySelector(".modaleImg");
+        galerieModale.innerHTML = ""; // Efface les projets actuels
+        mettreAJourGalerie();
+        alert("Nouveau projet envoyé !");
+      } else {
+        // La requête a échoué
+        console.error(
+          "Erreur lors de l'envoi des données à l'API :",
+          response.status
+        );
+        alert("Erreur lors de l'envoi du projet");
+      }
+    })
+    .catch((error) => {
+      console.error("Erreur lors de l'envoi des données à l'API :", error);
+      alert("Erreur lors de l'envoi du projet : " + error);
+    });
+}
+*/
+// Fonction pour mettre à jour la galerie dans la modale
+/*function mettreAJourGalerie() {
+  console.log("La fonction mettreAJourGalerie est appelée !");
+  // Récupérer la référence de l'élément de la galerie dans la modale
+  const galerieModale = document.getElementById("modale1");
+
+  // Récupérer les données de la galerie depuis l'API (ou utilisez votre propre méthode pour obtenir les données)
+  fetch("http://localhost:5678/api/works")
+    .then((response) => response.json())
+    .then((data) => {
+      // Récupérer tous les éléments de projet existants dans la galerie
+      const projetsExistant = galerieModale.getElementsById("modaleImg");
+
+      // Convertir les projets existants en un tableau pour faciliter la recherche
+      const projetsArray = Array.from(projetsExistant);
+
+      // Parcourir les données de la galerie et mettre à jour les éléments existants ou ajouter de nouveaux éléments
+      data.forEach((projet) => {
+        // Vérifier si l'élément du projet existe déjà dans la galerie
+        const projetExistant = projetsArray.find(
+          (element) => element.dataset.id === projet.id
+        );
+
+        if (projetExistant) {
+          // Mettre à jour les éléments existants
+          const image = projetExistant.querySelector("img");
+          image.src = projet.image;
+
+          const titre = projetExistant.querySelector("h3");
+          titre.textContent = projet.titre;
+        } else {
+          // Créer de nouveaux éléments pour les nouveaux projets
+          const nouveauProjetDiv = document.createElement("div");
+          nouveauProjetDiv.classList.add("modaleImg");
+          nouveauProjetDiv.dataset.id = projet.id;
+
+          const image = document.createElement("img");
+          image.src = projet.image;
+          nouveauProjetDiv.appendChild(image);
+
+          const titre = document.createElement("h3");
+          titre.textContent = projet.titre;
+          nouveauProjetDiv.appendChild(titre);
+
+          // Ajouter le nouvel élément du projet à la galerie
+          galerieModale.appendChild(nouveauProjetDiv);
+        }
+      });
+    })
+    .catch((error) => {
+      console.error(
+        "Erreur lors de la récupération des données de la galerie :",
+        error
+      );
+    });
+}*/
+/*function envoieDonneesApi() {
   document
     .getElementById("typetelechargerImage")
     .addEventListener("change", function (event) {
       const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
     });
-  // récupération des informations du formulaire
-  const form = document.getElementById("monFormulaire");
+
+  const titre = document.getElementById("title").value;
+  const categorieId = document.getElementById("categories-select").value;
+
+  const formData = new FormData();
+  formData.append("image", typetelechargerImage.files[0]);
+  formData.append("title", titre);
+  formData.append("category", categorieId);
+
+  // Récupère le token d'accès depuis le localStorage (assurez-vous que le token est correctement stocké lors de l'authentification)
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    console.error("Token d'accès introuvable.");
+    return;
+  }
+
+  // Effectue la requête POST à l'API avec le token d'accès dans l'en-tête
+  const url = "http://localhost:5678/api/works";
+  const init = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  };
+
+  fetch(url, init)
+    .then((response) => {
+      if (response.ok) {
+        // La requête a réussi
+        console.log("Données envoyées avec succès !");
+      } else {
+        // La requête a échoué
+        console.error(
+          "Erreur lors de l'envoi des données à l'API :",
+          response.status
+        );
+      }
+    })
+    .catch((error) => {
+      console.error("Erreur lors de l'envoi des données à l'API :", error);
+    });
+}
+document
+  .getElementById("envoyerButton")
+  .addEventListener("click", envoieDonneesApi);*/
+// récupération des informations du formulaire
+/*const form = document.getElementById("monFormulaire");
   console.log(form);
   // élément récupérer soit conforme au html
   if (form instanceof HTMLFormElement) {
@@ -300,6 +591,7 @@ function envoieDonneesApi() {
       "image",
       document.getElementById("typetelechargerImage").value
     );
+
     // ajout du token d'authentification à l'en-tête de la requête
     const token = localStorage.getItem("accessToken");
 
@@ -315,42 +607,9 @@ function envoieDonneesApi() {
       .then((response) => {
         if (response.ok) {
           modaleAlert("succés du téléchargement");
+          return works;
         }
       })
       .catch((error) => console.error("Error", error));
   }
-}
-
-/*const form = document.getElementById("monFormulaire");
-console.log(form);
-// élément récupérer soit conforme au html
-if (form instanceof HTMLFormElement) {
-  const formData = new FormData(form);
-  //envoyer le formulaire à l'Api
-  const urlProjet = "http://localhost:5678/api/works";
-  const token = localStorage.getItem("accessToken");
-
-  // Ajoutez les données du formulaire à l'objet FormData
-
-  // En-têtes de la requête POST
-  const headers = {
-    Authorization: `Bearer ${accessToken}`,
-  };
-  // Options de la requête POST
-  const options = {
-    method: "POST",
-    headers: headers,
-    body: formData,
-  };
-  // Envoi de la requête POST
-  fetch(url, options)
-    .then((response) => {
-      if (response.ok) {
-        modaleAlert("succés du téléchargement", data);
-      }
-      
-    })
-    .catch((error) => {
-      console.error("Erreur lors de l'ajout du projet :", error);
-    });
 }*/

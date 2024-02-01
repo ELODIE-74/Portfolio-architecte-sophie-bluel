@@ -101,7 +101,7 @@
               </div>
               <h2 id="titlemodale" class="titre2modale">Ajout photo</h2>
               <div id="ajout-image" class="ajout-image">
-                <div class="div-img">
+                <div class="div-img" id="monFormulaire">
                   <img
                     id="imageAffichee"
                     src=""
@@ -128,7 +128,7 @@
                   <p class="text-format">jpg,png: 4mo max</p>
                 </div>
               </div>
-              <form id="monFormulaire">
+              <form class="uploadForm">
                 <label for="title" class="champ">Titre</label>
                 <input type="text" class="champ" id="title" name="title" />
                 <label for="categories-select" class="champ">Catégories</label>
@@ -137,7 +137,9 @@
                 </select>
               </form>
               <hr />
-              <a href="./index.html" class="btn_valider">Valider</a>
+              <a href="./index.html" class="btn_valider" id="boutonValidation"
+                >Valider</a
+              >
             </div>
           </div>
         </aside>
