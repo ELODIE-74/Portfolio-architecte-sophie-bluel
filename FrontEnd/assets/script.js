@@ -290,6 +290,15 @@ function envoyerFormulaire() {
   const form = document.getElementById("monFormulaire");
   if (form instanceof HTMLFormElement) {
     const formData = new FormData(form);
+    formData.append(
+      "image",
+      document.getElementById("typetelechargerImage").value
+    );
+    formData.append("title", document.getElementById("title").value);
+    formData.append(
+      "category",
+      document.getElementById("categories-select").value
+    );
     const token = localStorage.getItem("accessToken");
     fetch("http://localhost:5678/api/works", {
       method: "POST",
