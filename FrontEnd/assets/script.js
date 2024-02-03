@@ -35,6 +35,7 @@ fetch("http://localhost:5678/api/works")
     works = json;
     const gallery = document.querySelector(".gallery"); //récupére les élemnts de la galerie
     displayWorks(works); // Appel de la fonction displayWorks avec les données récupérées
+    //envoyerFormulaire(works);
     console.table(works); //affichage de tous les projets(works)
   });
 
@@ -123,9 +124,11 @@ function ecouteClick() {
     });
   }
 }
+
 ////////////////////////////////////////////
 //partie mode édition modale(x2)/////
 ///////////////////////////////////////////
+//ouverture de la modale
 //ouverture de la modale
 // Sélection des éléments nécessaires au fonctionnement de la modale
 const modal = document.querySelector("#modale");
@@ -194,7 +197,6 @@ const retourButton = document.querySelector(".modale-direction");
 // ajout d'un écouteur d'événement pour afficher la première modale au clic sur la flèche de retour dans la deuxième modale
 retourButton.addEventListener("click", showModale1);
 //fonction pour afficher les travaux dans la modale
-
 //fonction pour afficher les travaux dans la modale
 function afficherImagesProjetsDansModale() {
   const modalContent = document.querySelector(".modaleImg");
@@ -251,6 +253,7 @@ function supprimerProjet(projetDiv) {
       });
   }
 }
+//version du 03/02
 document
   .getElementById("ajoutPhotoButton")
   .addEventListener("click", function (event) {
@@ -286,6 +289,87 @@ document
 const envoyerButton = document.getElementById("boutonValidation");
 envoyerButton.addEventListener("click", envoyerFormulaire);
 function envoyerFormulaire() {
+  const form = document.getElementById("monFormulaire");
+  if (form instanceof HTMLFormElement) {
+    const formData = new FormData(form);
+    const token = localStorage.getItem("accessToken");
+
+    // Vérifier si tous les champs sont remplis
+    const titre = formData.get("title");
+    const categorie = formData.get("category");
+    const image = formData.get("image");
+
+    if (titre && categorie && image) {
+      // Tous les champs sont remplis, colorer le bouton en vert
+      const boutonValider = document.getElementById("boutonValidation");
+      boutonValider.classList.add("valider");
+
+      // Effectuer l'envoi du formulaire
+      fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Erreur lors de l'envoi du formulaire");
+          }
+        })
+        .then((data) => {
+          // Manipulations des données renvoyées par l'API en cas de succès
+          console.log("Réponse de l'API :", data);
+          // Exécuter d'autres actions ou afficher un message de succès
+        })
+        .catch((error) => {
+          console.error("Erreur :", error);
+          // Afficher un message d'erreur ou effectuer des actions en cas d'échec de la requête
+        });
+    } else {
+      // L'un des champs est vide, enlever la coloration verte du bouton
+      const boutonValider = document.getElementById("boutonValidation");
+      boutonValider.classList.remove("btn_valider");
+    }
+  }
+}
+/*function envoyerFormulaire() {
+  const form = document.getElementById("monFormulaire");
+  if (form instanceof HTMLFormElement) {
+    const formData = new FormData(form);
+    const token = localStorage.getItem("accessToken");
+
+    fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Erreur lors de l'envoi du formulaire");
+        }
+      })
+      .then((data) => {
+        // Manipulations des données renvoyées par l'API en cas de succès
+        console.log("Réponse de l'API :", data);
+        // Exécuter d'autres actions ou afficher un message de succès
+      })
+      .catch((error) => {
+        console.error("Erreur :", error);
+        // Afficher un message d'erreur ou effectuer des actions en cas d'échec de la requête
+      });
+  }
+}*/
+
+/*function envoyerFormulaire() {
   //event.preventDefault(); // empêche le comportement par défaut du lien
   const form = document.getElementById("monFormulaire");
   if (form instanceof HTMLFormElement) {
@@ -300,11 +384,10 @@ function envoyerFormulaire() {
       document.getElementById("categories-select").value
     );
     const token = localStorage.getItem("accessToken");
+
     fetch("http://localhost:5678/api/works", {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: "Bearer " + token },
       body: formData,
     })
       .then((response) => {
@@ -319,14 +402,16 @@ function envoyerFormulaire() {
         // manipulations des données
         const nouveauProjet = data.work;
         const projetHTML = genererProjetHTML(works);
-        const galerieProjet = document.getElementById("gallery");
+        const galerieProjet = document.querySelector(".gallery");
         galerieProjet.insertAdjacentHTML("beforeend", projetHTML);
       })
       .catch((error) => {
         console.error("Erreur", error);
       });
+    console.log(localStorage.getItem("accessToken"));
   }
-}
+}*/
+//////////////////////////////////////////////autre version
 /*const form = document.getElementById("monFormulaire");
 console.log(form);
 // élément récupérer soit conforme au html

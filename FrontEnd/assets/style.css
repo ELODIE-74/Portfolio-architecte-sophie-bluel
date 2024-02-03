@@ -452,9 +452,9 @@ a {
   justify-content: flex-end;
   margin-top: -65px;
 }
-/*.modale-content {
+.modale-content {
   display: none;
-}*/
+}
 /*trait de séparation*/
 hr {
   color: blue;
@@ -575,7 +575,7 @@ hr {
 }
 
 input[type="text"],
-select.champ {
+select.form-control {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -585,12 +585,13 @@ select.champ {
   box-sizing: border-box;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
+
 hr {
   color: blue;
   margin-top: 10px;
 }
 /*css bouton de validation à la fin*/
-.btn_valider {
+#boutonValidation {
   color: white;
   background-color: grey;
   width: 180px;
@@ -602,6 +603,10 @@ hr {
   border: none;
   display: inline-block; /*régle les problème de hauteurs design css*/
   line-height: 20px;
+}
+.valider {
+  background-color: green;
+  color: white;
 }
 /*pour assombrir l'arrière-plan en mode connexion*/
 .dim-background {
