@@ -324,10 +324,24 @@ function envoyerFormulaire() {
           // Manipulations des données renvoyées par l'API en cas de succès
           console.log("Réponse de l'API :", data);
           // Exécuter d'autres actions ou afficher un message de succès
+          const afficherMessageSucces =
+            document.getElementById("success-message");
+          afficherMessageSucces.style.display = "block";
+          // masque le message de succès après 6 secondes, apparait dans la console
+          setTimeout(() => {
+            afficherMessageSucces.style.display = "none";
+          }, 6000);
         })
         .catch((error) => {
           console.error("Erreur :", error);
-          // Afficher un message d'erreur ou effectuer des actions en cas d'échec de la requête
+          // affiche un message d'erreur ou effectue des actions en cas d'échec de la requête post à l'API
+          const afficherMessageErreur =
+            document.getElementById("error-message");
+          afficherMessageErreur.style.display = "block";
+          // masque le message d'erreur après 6 secondes
+          setTimeout(() => {
+            afficherMessageErreur.style.display = "none";
+          }, 6000);
         });
     } else {
       // L'un des champs est vide, enlever la coloration verte du bouton
@@ -336,6 +350,7 @@ function envoyerFormulaire() {
     }
   }
 }
+
 /*function envoyerFormulaire() {
   const form = document.getElementById("monFormulaire");
   if (form instanceof HTMLFormElement) {

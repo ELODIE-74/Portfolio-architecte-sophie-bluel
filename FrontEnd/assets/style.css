@@ -608,6 +608,15 @@ hr {
   background-color: green;
   color: white;
 }
+.success-message {
+  color: green;
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
 /*pour assombrir l'arrière-plan en mode connexion*/
 .dim-background {
   background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond semi-transparente */
