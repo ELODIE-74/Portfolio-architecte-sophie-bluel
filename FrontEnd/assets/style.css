@@ -590,6 +590,11 @@ hr {
   color: blue;
   margin-top: 10px;
 }
+/*définir une taille de l'image envoyé a l'API*/
+.taille-image {
+  max-width: 300px;
+  max-height: 200px;
+}
 /*css bouton de validation à la fin*/
 #boutonValidation {
   color: white;
@@ -608,6 +613,7 @@ hr {
   background-color: green;
   color: white;
 }
+
 .success-message {
   color: green;
   font-weight: bold;

@@ -349,4 +349,38 @@ function envoyerFormulaire() {
       boutonValider.classList.remove("btn_valider");
     }
   }
+  verifierChampsRemplis();
+  //afficherModal(message);
 }
+//vérification des champs du formulaire remplies pour la coloration du bouton valider
+const formulaire = document.querySelector("#monFormulaire");
+const boutonValider = formulaire.querySelector("#boutonValidation");
+const champs = formulaire.querySelectorAll("input"); //récupére les input des champs
+champs.forEach((champ) => {
+  champ.addEventListener("input", verifierChampsRemplis);
+});
+function verifierChampsRemplis() {
+  let champsRemplis = true;
+  champs.forEach((champ) => {
+    if (champ.value === "") {
+      champsRemplis = false;
+    }
+  });
+  if (champsRemplis) {
+    boutonValider.style.backgroundColor = "green";
+  } else {
+    boutonValider.style.backgroundColor = ""; // Remettre la couleur par défaut si au moins un champ est vide
+  }
+}
+/*function afficherModal(message) {
+  const modal = document.getElementById("modal");
+  const successModal = document.getElementById("success-message");
+  const errorModal = document.getElementById("error-message");
+  if (message === "success") {
+    successModal.innerHTML = "Formulaire envoyé avec succès !";
+    modal.style.display = "block";
+  } else if (message === "error") {
+    errorModal.innerHTML = "Erreur lors de l'envoi du formulaire.";
+    modal.style.display = "block";
+  }
+}*/
