@@ -242,10 +242,10 @@ function supprimerProjet(projetDiv) {
     })
       .then((response) => {
         if (response.ok) {
-          afficherMessageSucces("Projet supprimé avec succès");
+          afficherMessage(document.querySelector("#modale1 .success-message"));
           afficherImagesProjetsDansModale(); //actualise la modale pour afficher les projets mis à jour
         } else {
-          afficherMessageErreur("Erreur lors de la suppression du projet");
+          afficherMessage(document.querySelector("#modale1 .error-message"));
         }
       })
       .catch((error) => {
@@ -356,6 +356,9 @@ function verifierChampsRemplis() {
   } else {
     boutonValider.style.backgroundColor = ""; // Remettre la couleur par défaut si au moins un champ est vide
   }
+}
+function afficherMessage(element) {
+  element.classList.remove("hidden");
 }
 function afficherModalMessage(message) {
   const modal = document.getElementById("modal2");
