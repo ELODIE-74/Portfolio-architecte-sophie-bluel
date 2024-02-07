@@ -335,6 +335,7 @@ function envoyerFormulaire() {
     }
   }
   verifierChampsRemplis();
+  afficherModalMessage(`"success"` || `"error"`);
 }
 //vérification des champs du formulaire remplies pour la coloration du bouton valider
 const formulaire = document.querySelector("#monFormulaire");
@@ -361,8 +362,6 @@ function afficherModalMessage(message) {
   const afficherMessageSucces = document.getElementById("success-message");
   const afficherMessageErreur = document.getElementById("error-message");
   if (message === "success") {
-    afficherMessageSucces.querySelector("p").innerHTML =
-      "Ajout de projet réussi !";
     afficherMessageSucces.style.display = "block";
     modal.style.display = "block";
     setTimeout(() => {
@@ -370,8 +369,6 @@ function afficherModalMessage(message) {
       modal.style.display = "none";
     }, 6000);
   } else if (message === "error") {
-    afficherMessageErreur.querySelector("p").innerHTML =
-      "Echec lors de l'envoi des données";
     afficherMessageErreur.style.display = "block";
     modal.style.display = "block";
     setTimeout(() => {
@@ -380,40 +377,3 @@ function afficherModalMessage(message) {
     }, 6000);
   }
 }
-/*function afficherModalMessage(message) {
-  const modal = document.getElementById("modal2");
-  const afficherMessageSucces = document.getElementById("success-message");
-  const afficherMessageErreur = document.getElementById("error-message");
-  if (message === "success") {
-    afficherMessageSucces.innerHTML = "Ajout de projet réussi !";
-    modal.style.display = "block";
-    setTimeout(() => {
-      afficherMessageSucces.style.display = "none";
-    }, 6000);
-  } else if (message === "error") {
-    afficherMessageErreur.innerHTML = "Echec lors de l'envoi des données";
-    modal.style.display = "block";
-    setTimeout(() => {
-      afficherMessageErreur.style.display = "none";
-    }, 6000);
-  }
-}*/
-//message erreur
-// affiche un message d'erreur ou effectue des actions en cas d'échec de la requête post à l'API
-/*const afficherMessageErreur =
-            document.getElementById("error-message");
-          afficherMessageErreur.style.display = "block";
-          // masque le message d'erreur après 6 secondes
-          setTimeout(() => {
-            afficherMessageErreur.style.display = "none";
-          }, 6000);*/
-
-//message succes
-// Exécuter d'autres actions ou afficher un message de succès
-/*const afficherMessageSucces =
-            document.getElementById("success-message");
-          afficherMessageSucces.style.display = "block";
-          // masque le message de succès après 6 secondes, apparait dans la console
-          setTimeout(() => {
-            afficherMessageSucces.style.display = "none";
-          }, 6000);*/
