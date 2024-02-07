@@ -102,34 +102,67 @@
               <form class="uploadForm" id="monFormulaire">
                 <div id="ajout-image" class="ajout-image">
                   <div class="div-img">
-                    <img id="imageAffichee" src="" alt="Image affichée" style="display: none" />
+                    <img
+                      id="imageAffichee"
+                      src=""
+                      alt="Image affichée"
+                      style="display: none"
+                    />
                   </div>
-                  <input type="file" id="typetelechargerImage" name="image" accept="image/*" width="150px" height="400px" style="display: none" />
+                  <input
+                    type="file"
+                    id="typetelechargerImage"
+                    name="image"
+                    accept="image/*"
+                    style="display: none"
+                  />
                   <div class="elements-a-masquer">
-                    <i id="iconeMontagne" class="fa-regular fa-image" style="color: #a9cbd7"></i>
-                    <a href="#" id="ajoutPhotoButton" class="btn-ajoutphotonew">+ Ajouter photo</a>
+                    <i
+                      id="iconeMontagne"
+                      class="fa-regular fa-image"
+                      style="color: #a9cbd7"
+                    ></i>
+                    <a href="#" id="ajoutPhotoButton" class="btn-ajoutphotonew"
+                      >+ Ajouter photo</a
+                    >
                     <p class="text-format">jpg,png: 4mo max</p>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="title" class="champ">Titre</label>
-                  <input type="text" class="form-control" id="title" name="title" required />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    name="title"
+                    required
+                  />
                 </div>
                 <div class="form-group">
-                  <label for="categories-select" class="champ">Catégories</label>
-                  <select name="category" class="form-control" id="categories-select" required>
-                    <option></option>
+                  <label for="categories-select" class="champ"
+                    >Catégories</label
+                  >
+                  <select
+                    name="category"
+                    class="form-control"
+                    id="categories-select"
+                    required
+                  >
+                    <option label="Sélectionnez une catégorie"></option>
                   </select>
                 </div>
-                <button type="submit" class="btn_valider" id="boutonValidation">Valider</button>
+                <button type="submit" class="btn_valider" id="boutonValidation">
+                  Valider
+                </button>
               </form>
               <div id="success-message">
-                <p style="display: none;">Ajout de projet réussi</p>
+                <p style="display: none">Ajout de projet réussi</p>
               </div>
               <div id="error-message">
-                <p style="display: none;">Echec lors de l'envoi des données</p>
+                <p style="display: none">Echec lors de l'envoi des données</p>
               </div>
             </div>
+          </div>
         </aside>
         <div class="gallery"></div>
       </section>
