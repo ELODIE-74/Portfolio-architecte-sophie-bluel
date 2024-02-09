@@ -315,18 +315,14 @@ function envoyerFormulaire() {
       })
         .then((response) => {
           if (response.ok) {
-            return response.json();
+            alert("Projet ajouté avec succès !");
           } else {
-            throw new Error("Erreur lors de l'envoi du formulaire");
+            alert("Une erreur est survenue lors de l'ajout du projet.");
           }
-        })
-        .then((data) => {
-          // Manipulations des données renvoyées par l'API en cas de succès
-          console.log("Réponse de l'API :", data);
-          afficherModalMessage("success");
         })
         .catch((error) => {
           console.error("Erreur :", error);
+          alert("Une erreur est survenue lors de l'ajout du projet.");
         });
     } else {
       // si l'un des champs est vide, il faut enlever la coloration verte du bouton
@@ -334,8 +330,7 @@ function envoyerFormulaire() {
       boutonValider.classList.remove("btn_valider");
     }
   }
-  verifierChampsRemplis();
-  afficherModalMessage(`"success"` || `"error"`);
+  verifierChampsRemplis(); //appel de la fonction pour vérifier les champs
 }
 //vérification des champs du formulaire remplies pour la coloration du bouton valider
 const formulaire = document.querySelector("#monFormulaire");
@@ -343,6 +338,7 @@ const boutonValider = formulaire.querySelector("#boutonValidation");
 const champs = formulaire.querySelectorAll("input"); //récupére les input des champs
 champs.forEach((champ) => {
   champ.addEventListener("input", verifierChampsRemplis);
+  champ.addEventListener("select", verifierChampsRemplis);
 });
 function verifierChampsRemplis() {
   let champsRemplis = true;
@@ -352,7 +348,7 @@ function verifierChampsRemplis() {
     }
   });
   if (champsRemplis) {
-    boutonValider.style.backgroundColor = "green";
+    boutonValider.style.backgroundColor = "#1d6154";
   } else {
     boutonValider.style.backgroundColor = ""; // Remettre la couleur par défaut si au moins un champ est vide
   }
@@ -360,7 +356,21 @@ function verifierChampsRemplis() {
 function afficherMessage(element) {
   element.classList.remove("hidden");
 }
-function afficherModalMessage(message) {
+/*function afficherMessageModale2(classeMessage) {
+  const messageElement = document.querySelector(classeMessage);
+  if (messageElement) {
+    messageElement.classList.remove("hidden");
+  }
+}*/
+/*function afficherMessageDeSucces() {
+  var successMessage = document.querySelector("#modale2 .success-message");
+  successMessage.classList.remove("hidden");
+}
+function afficherMessageDErreur() {
+  var errorMessage = document.querySelector("#modale2 .error-message");
+  errorMessage.classList.remove("hidden");
+}*/
+/*function afficherModalMessage(message) {
   const modal = document.getElementById("modal2");
   const afficherMessageSucces = document.getElementById("success-message");
   const afficherMessageErreur = document.getElementById("error-message");
@@ -379,4 +389,4 @@ function afficherModalMessage(message) {
       modal.style.display = "none";
     }, 6000);
   }
-}
+}*/
