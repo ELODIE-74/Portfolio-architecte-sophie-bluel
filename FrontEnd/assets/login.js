@@ -3,8 +3,8 @@
 document.getElementById("submit").addEventListener("click", async (event) => {
   event.preventDefault(); // Empêche le rechargement de la page après la soumission du formulaire
   //console.log("envoie réussi");
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value; //récupère la valeur de l'email
+  const password = document.getElementById("password").value; //récupère la valeur du mot de passe
   try {
     const response = await fetch("http://localhost:5678/api/users/login", {
       method: "POST",
@@ -14,24 +14,26 @@ document.getElementById("submit").addEventListener("click", async (event) => {
       body: JSON.stringify({ email, password }),
     });
     if (!response.ok) {
-      throw new Error("Erreur lors de la connexion");
+      throw new Error("Erreur lors de la connexion"); //message d'erreur si problème lors de la connexion
     }
-    const data = await response.json();
+    const data = await response.json(); //réponse en format json
     const token = data.token;
     // Stocke le token dans le local storage pour une utilisation ultérieure
     localStorage.setItem("accessToken", token);
-    console.log("Connexion réussie");
+    console.log("Connexion réussie"); //permet de savoir si la connexion à était une réussite
     window.location.href = "index.html"; // Redirige l'utilisateur vers la page principale
   } catch (error) {
     console.error(error);
-    document.getElementById("errormessage").classList.remove("hidden");
+    document.getElementById("errormessage").classList.remove("hidden"); //affiche un message d'erreur si problème lors de l'authentification
   }
 });
-let users;
+let users; //variable utilisateurs
+//fonction qui permet de vérifier que tous les champs sont remplis correctements et au bon format
 function identification() {
   const emailenvoie = document.getElementsByName("mail");
   const motdepasseenvoie = (motdepasseenvoie =
     document.getElementsByName("password"));
+  //va de la connexion(login) à aux utilisateurs (users), parcours le tableau
   for (login of users) {
     const email = document.getElementsByName("mail")[0].value;
     const motdepasse = login.email;
