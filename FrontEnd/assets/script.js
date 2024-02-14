@@ -9,22 +9,20 @@ const accessToken = localStorage.getItem("accessToken"); //récupération du jet
 if (accessToken) {
   logpage.innerText = "logout";
   logpage.addEventListener("click", function (event) {
-    //event.preventDefault();
     localStorage.clear(); //écoute au moment de la connexion + changement de statut de login à logout
   });
-  const header = document.querySelector("#header_hidden"); //variable qui récupére l'élément html
-  const connexionHeader = document.createElement("div"); //variable qui crée la div
+  const header = document.querySelector("#header_hidden");
+  const connexionHeader = document.createElement("div");
   connexionHeader.classList.add("barre_hidden"); //ajout du css du bandeau, récupére la classe css
   connexionHeader.innerHTML =
     '<i class="fa-regular fa-pen-to-square"></i><p>Mode édition</p>';
-  header.prepend(connexionHeader); //ajout des éléments crée pour le mode édition
+  header.prepend(connexionHeader);
   //code précedant pour le masquage du bandeau en mode édition
-  const buttonHidden = document.querySelector(".button_hidden"); //variable qui récupére l'élement html
-  const buttonedition = document.createElement("div"); //création de la div
+  const buttonHidden = document.querySelector(".button_hidden");
+  const buttonedition = document.createElement("div");
   buttonedition.innerHTML =
-    '<i class="fa-regular fa-pen-to-square"></i><p class="edit_modifier"><a href="#modale1" class="js-modal">Modifier</a></p>'; //ajout des éléments
-  buttonHidden.appendChild(buttonedition); //ajout des éléments crée pour le mode édition, lier
-  //le code suivant masque les boutons de filtrage en mode édition
+    '<i class="fa-regular fa-pen-to-square"></i><p class="edit_modifier"><a href="#modale1" class="js-modal">Modifier</a></p>';
+  buttonHidden.appendChild(buttonedition);
   const filterButtons = document.getElementById("Filtres"); // récupére la div qui contient les filtres
   filterButtons.style.display = "none"; //fait disparaitres les boutons de filtrage en mode édition
 }
@@ -48,70 +46,63 @@ fetch("http://localhost:5678/api/categories")
     categoriesData.forEach((category) => {
       let option = document.createElement("option"); //balise option emplacement
       option.value = category.id;
-      option.text = category.name; //va de catégorie en catégorie pour la sélection
-      categoriesSelect.appendChild(option); //on lie option à la sélection des catégories
+      option.text = category.name;
+      categoriesSelect.appendChild(option);
     });
     //fin affichage sélection deuxième modale
     categories = new Set(categoriesData); //données de la catégorie
     const filtres = document.getElementById("Filtres"); //variable globale qui récupérer les filtres
     for (categorie of categories) {
       //boucle pour parcourir les différentes catégories
-      //création du bouton de la catégorie objet
       let divObjets = document.createElement("div"); //création de la div objet
-      divObjets.innerText = categorie.name; //rajout du nom de la catégorie
-      divObjets.id = categorie.name; //rajout de l'identifiant de la catégorie
-      filtres.appendChild(divObjets); //lier la div(objet) au parent filtres
+      divObjets.innerText = categorie.name;
+      divObjets.id = categorie.name;
+      filtres.appendChild(divObjets);
     }
     ecouteClick(); //écoute l'évènement au clic sur un bouton et affiche la div concerné
   })
   //Traitement de l'erreur si il n'y a pas de réponse de l'url
   .catch((error) => {
     console.error(
-      "Une erreur s'est produite lors de la récupération des catégories :", //message d'erreur
+      "Une erreur s'est produite lors de la récupération des catégories :",
       error
     );
   });
 
-//Fonction qui filtre un projet = une catégorie
-//function filterByCategorie(categorie) {
-//return works.filter((work) => work.category.name === categorie); //retourne tous les éléments avec le même identifiant (ici les différentes catégories)
-//}
 function filterByCategorie(categorie) {
   if (categorie === "Tous") {
     // Retourne tous les travaux sans filtrage
     return works;
   } else {
-    // Filtre
-    // les travaux en fonction de la catégorie
+    // Filtre les travaux en fonction de la catégorie
     return works.filter((work) => work.category.name === categorie);
   }
 }
 
 //reprise des éléments du work dans la fonction displayWorks et affichage des oeuvres
 const displayWorks = (works) => {
-  const gallery = document.querySelector(".gallery"); //variable qui récupére tous les élèment de la galerie
+  const gallery = document.querySelector(".gallery");
   //Boucle pour parcourir d'un projet en particulier à tous les projets
   for (const work of works) {
-    const figure = document.createElement("figure"); //création de l'élément
-    const img = document.createElement("img"); //création de l'image
-    const figcaption = document.createElement("figcaption"); //création de la légende
-    img.src = work.imageUrl; //source
-    img.alt = work.title; //titre
-    figcaption.textContent = work.title; //un projet avec un titre
-    figure.appendChild(img); //lier
-    figure.appendChild(figcaption); //lier
-    gallery.appendChild(figure); //lier
+    const figure = document.createElement("figure");
+    const img = document.createElement("img");
+    const figcaption = document.createElement("figcaption");
+    img.src = work.imageUrl;
+    img.alt = work.title;
+    figcaption.textContent = work.title;
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+    gallery.appendChild(figure);
   }
 };
 //gestion des click sur les boutons
 function ecouteClick() {
-  const categories = document.querySelectorAll("#Filtres div"); //récupére toutes les div contenus dans la partie Filtres
+  const categories = document.querySelectorAll("#Filtres div");
   for (let i = 0; i < categories.length; i++) {
     //parcour le tableau et grandit / initialise la variable à 0 point de départ
-    const categorie = categories[i]; //tableau des catégories(le parcours)
+    const categorie = categories[i];
     categorie.addEventListener("click", function () {
-      //écoute de l'évènement au click sur un bouton
-      let textecategorie = categorie.innerText; //variable pour récupérer le texte de la catégorie
+      let textecategorie = categorie.innerText;
       // Filtre les oeuvres en fonction de la catégorie cliquée
       const oeuvresFiltrees = filterByCategorie(textecategorie);
       // Efface les éléments affichés actuellement dans la galerie
@@ -119,7 +110,7 @@ function ecouteClick() {
       gallery.innerHTML = "";
       // Affiche les nouvelles oeuvres filtrées dans la galerie
       displayWorks(oeuvresFiltrees); //appel de la fonction pour afficher les oeuvres
-      console.log(categorie); //affiche une catégorie
+      console.log(categorie);
     });
   }
 }
@@ -138,14 +129,14 @@ const modale2 = document.getElementById("modale2"); //partie 2 de la modale (for
 
 // Fonction pour ouvrir la modale
 const openModal = () => {
-  modal.style.display = "block"; //faire apparaitre la modale
+  modal.style.display = "block";
   document.body.classList.add("dim-background"); //assombrir le site en mode édition à l'ouverture de la modale
-  afficherImagesProjetsDansModale("#modale1"); //affiche de la galerie de projets au moment de l'ouverture de la première modale
+  afficherImagesProjetsDansModale("#modale1");
 };
 
 // Fonction pour fermer la modale
 const closeModal = () => {
-  modal.style.display = "none"; //masquer la modale
+  modal.style.display = "none";
   document.body.classList.remove("dim-background"); //enelever l'assombrissement quand on sort de la modale
 };
 
@@ -153,8 +144,8 @@ const closeModal = () => {
 modalOpenButtons.forEach((button) => {
   button.addEventListener("click", () => {
     openModal();
-    modale1.style.display = "block"; // affichage de la première modale lors de son ouverture
-    modale2.style.display = "none"; // masquage de la deuxème modale lorsque que l'on ouvre la première modale
+    modale1.style.display = "block";
+    modale2.style.display = "none";
   });
 });
 // Ajout des écouteurs d'événements pour les boutons de fermeture de la modale
@@ -169,14 +160,11 @@ modal.addEventListener("click", (event) => {
   }
 });
 
-// Sélection du lien pour ajouter une photo
-//const ajoutPhotoLink = document.querySelector(".ajoutPhotoButton");
-
 // Fonction pour afficher la deuxième modale au clic sur le lien "Ajouter une photo"
 const showModale2 = (event) => {
   event.preventDefault();
-  modale1.style.display = "none"; //masque la première partie à ce moment-là
-  modale2.style.display = "block"; // fait apparaitre la deuxième partie à ce moment-là
+  modale1.style.display = "none";
+  modale2.style.display = "block";
 };
 
 // Ajout d'un écouteur d'événement pour afficher la deuxième modale au clic sur le lien "Ajouter une photo"
@@ -184,8 +172,8 @@ const ajoutPhotoLink = document.getElementById("ajoutPhotoLink");
 ajoutPhotoLink.addEventListener("click", showModale2);
 // Fonction pour afficher la première modale au clic sur la flèche de retour dans la deuxième modale
 const showModale1 = () => {
-  modale2.style.display = "none"; // masque la deuxième partie lorsque l'on revient à la première modale
-  modale1.style.display = "block"; // affiche la première partie lorsque l'on revient à la première modale
+  modale2.style.display = "none";
+  modale1.style.display = "block";
 };
 
 // Sélection de la flèche de retour dans la deuxième partie et va sur la deuxième partie
@@ -214,13 +202,13 @@ function afficherImagesProjetsDansModale() {
       supprimerProjet(projet.id); // Appel de la fonction qui permet de supprimer le projet
     });
     // Ajouts des éléments au contenu de la modale(première partie)
-    projetDiv.appendChild(projetImg); //lie image à la div
-    projetDiv.appendChild(poubelleIcon); //lie icone
-    modalContent.appendChild(projetDiv); //lie le contenu
+    projetDiv.appendChild(projetImg);
+    projetDiv.appendChild(poubelleIcon);
+    modalContent.appendChild(projetDiv);
     // Ajout d'une nouvelle div avec un identifiant unique pour chaque projet
-    projetDiv.id = `projet-${projet.id}`; // Utilise l'identifiant du projet comme partie de l'identifiant de la div
+    projetDiv.id = `projet-${projet.id}`;
     // Définit le fond de la div avec l'URL de l'image
-    projetDiv.style.backgroundImage = `url(${projet.imageUrl})`; //récupére chaque projet individuellement
+    projetDiv.style.backgroundImage = `url(${projet.imageUrl})`;
     envoyerFormulaire(); //appel de la fonction pour la mise a jour des nouveaux projets rajoutés
   });
 }
@@ -238,20 +226,22 @@ function supprimerProjet(projetDiv) {
     })
       .then((response) => {
         if (response.ok) {
-          afficherMessage(document.querySelector("#modale1 .success-message")); //affiche un message de succés dans la modale si réussi
-          afficherImagesProjetsDansModale(); //actualise la modale pour afficher les projets mis à jour
+          afficherMessage(document.querySelector("#modale1 .success-message"));
+          afficherImagesProjetsDansModale();
+          //raîchir la page actuelle après la suppression du projet
+          location.reload();
         } else {
-          afficherMessage(document.querySelector("#modale1 .error-message")); //affiche un message en cas d'échec de suppression personnaliser
+          afficherMessage(document.querySelector("#modale1 .error-message"));
         }
       })
       .catch((error) => {
-        afficherMessageErreur("Erreur lors de la suppression du projet"); //affiche un message d'erreur standard
+        afficherMessageErreur("Erreur lors de la suppression du projet");
       });
   }
 }
 //éléments qui permettent d'ouvrir l'explorateur windows et de choisir et de mettre la nouvelle image dans la div prévut à cet effet
 document
-  .getElementById("ajoutPhotoButton") //récupére l'identifiant du btn
+  .getElementById("ajoutPhotoButton")
   .addEventListener("click", function (event) {
     event.preventDefault(); // Empêche le comportement par défaut du lien
     document.getElementById("typetelechargerImage").click();
@@ -260,46 +250,46 @@ document
 document
   .getElementById("typetelechargerImage")
   .addEventListener("change", function (event) {
-    const file = event.target.files[0]; // Récupère le fichier image sélectionné par l'utilisateur
+    const file = event.target.files[0];
 
     if (file) {
       const reader = new FileReader();
       reader.addEventListener("load", function () {
-        const imageSrc = reader.result; // Récupère l'URL de l'image sous forme de texte
+        const imageSrc = reader.result;
         const elementsAMasquer = document.querySelector(".elements-a-masquer");
-        elementsAMasquer.style.zIndex = "-1"; // Masque les éléments d'origine présents dans la modale au moment de la sélection
+        elementsAMasquer.style.zIndex = "-1";
 
-        const imageElement = document.createElement("img"); // Crée un nouvel élément image
-        imageElement.src = imageSrc; // Attribue l'URL de l'image à l'attribut src de l'élément image
-        imageElement.style.width = "180px"; //taille image dans la div
-        imageElement.style.height = "210px"; //hauteur de l'image dans la div
-        imageElement.style.marginTop = "84px"; //marge
-        imageElement.style.zIndex = "6"; //position par rapport aux autres éléments
+        const imageElement = document.createElement("img");
+        imageElement.src = imageSrc;
+        imageElement.style.width = "180px";
+        imageElement.style.height = "210px";
+        imageElement.style.marginTop = "84px";
+        imageElement.style.zIndex = "6";
 
-        document.querySelector(".div-img").appendChild(imageElement); // Ajoute l'élément image à la div
+        document.querySelector(".div-img").appendChild(imageElement);
       });
 
       reader.readAsDataURL(file); // Lit le contenu du fichier image en tant qu'URL de données
     }
   });
-const envoyerButton = document.getElementById("boutonValidation"); //récupére l'identifiant du btn validation
-envoyerButton.addEventListener("click", envoyerFormulaire); //écouteur d'évènement au moment de la validation des données
+const envoyerButton = document.getElementById("boutonValidation");
+envoyerButton.addEventListener("click", envoyerFormulaire);
 //fonction pour envoyer les données du formulaire à l'API
 function envoyerFormulaire() {
-  const form = document.getElementById("monFormulaire"); //récupére l'identifiant du formulaire
+  const form = document.getElementById("monFormulaire");
   if (form instanceof HTMLFormElement) {
-    const formData = new FormData(form); //formulaire avec la méthode formData
-    const token = localStorage.getItem("accessToken"); //récupère le jeton d'authentification
+    const formData = new FormData(form);
+    const token = localStorage.getItem("accessToken");
 
     // Vérifier si tous les champs sont remplis
-    const titre = formData.get("title"); //titre
-    const categorie = formData.get("category"); //catégorie
-    const image = formData.get("image"); //image
+    const titre = formData.get("title");
+    const categorie = formData.get("category");
+    const image = formData.get("image");
 
     if (titre && categorie && image) {
       // si tous les champs sont remplis, colorer le bouton en vert
       const boutonValider = document.getElementById("boutonValidation");
-      boutonValider.classList.add("valider"); //rajout de la classe valider
+      boutonValider.classList.add("valider");
 
       // Effectuer l'envoi du formulaire
       fetch("http://localhost:5678/api/works", {
@@ -312,9 +302,9 @@ function envoyerFormulaire() {
       })
         .then((response) => {
           if (response.ok) {
-            alert("Projet ajouté avec succès !"); //message de succés
+            alert("Projet ajouté avec succès !");
           } else {
-            alert("Une erreur est survenue lors de l'ajout du projet."); //message d'erreur
+            alert("Une erreur est survenue lors de l'ajout du projet.");
           }
         })
         .catch((error) => {
@@ -324,7 +314,7 @@ function envoyerFormulaire() {
     } else {
       // si l'un des champs est vide, il faut enlever la coloration verte du bouton
       const boutonValider = document.getElementById("boutonValidation");
-      boutonValider.classList.remove("btn_valider"); //enlève la classe sur le btn
+      boutonValider.classList.remove("btn_valider");
     }
   }
   verifierChampsRemplis(); //appel de la fonction pour vérifier les champs
@@ -332,10 +322,10 @@ function envoyerFormulaire() {
 //vérification des champs du formulaire remplies pour la coloration du bouton valider
 const formulaire = document.querySelector("#monFormulaire");
 const boutonValider = formulaire.querySelector("#boutonValidation");
-const champs = formulaire.querySelectorAll("input"); //récupére les input des champs
+const champs = formulaire.querySelectorAll("input", "select");
 champs.forEach((champ) => {
-  champ.addEventListener("input", verifierChampsRemplis); //écoute tous les input
-  champ.addEventListener("select", verifierChampsRemplis); //écoute le select ou change
+  champ.addEventListener("input", verifierChampsRemplis);
+  champ.addEventListener("select", verifierChampsRemplis);
 });
 //fonction qui vérifie que tous les champs sont remplis et colore le btn en vert si complet
 function verifierChampsRemplis() {
@@ -346,9 +336,9 @@ function verifierChampsRemplis() {
     }
   });
   if (champsRemplis) {
-    boutonValider.style.backgroundColor = "#1d6154"; //coloration du btn si tous les champs sont remplis
+    boutonValider.style.backgroundColor = "#1d6154";
   } else {
-    boutonValider.style.backgroundColor = ""; // Remettre la couleur par défaut si au moins un champ est vide
+    boutonValider.style.backgroundColor = "";
   }
 }
 //fonction pour afficher les messages d'erreur lors de la suppression d'un projet
