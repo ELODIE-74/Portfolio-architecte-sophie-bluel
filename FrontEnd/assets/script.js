@@ -44,17 +44,17 @@ fetch("http://localhost:5678/api/categories")
     //partie afficher dans la deuxième modale champ de sélection
     const categoriesSelect = document.getElementById("categories-select");
     categoriesData.forEach((category) => {
-      let option = document.createElement("option"); //balise option emplacement
+      let option = document.createElement("option");
       option.value = category.id;
       option.text = category.name;
       categoriesSelect.appendChild(option);
     });
     //fin affichage sélection deuxième modale
     categories = new Set(categoriesData); //données de la catégorie
-    const filtres = document.getElementById("Filtres"); //variable globale qui récupérer les filtres
+    const filtres = document.getElementById("Filtres");
     for (categorie of categories) {
       //boucle pour parcourir les différentes catégories
-      let divObjets = document.createElement("div"); //création de la div objet
+      let divObjets = document.createElement("div");
       divObjets.innerText = categorie.name;
       divObjets.id = categorie.name;
       filtres.appendChild(divObjets);
@@ -117,13 +117,12 @@ function ecouteClick() {
 
 ////////////////////////////////////////////
 //partie mode édition modale(x2)/////
-//ouverture de la modale
 // Sélection des éléments nécessaires au fonctionnement de la modale
 const modal = document.querySelector("#modale"); //récupére l'aside qui contient la modale
-const modalContents = document.querySelectorAll(".modale-content"); //le conteneur de la modale
-const modalCloseButtons = document.querySelectorAll(".js-modal-close"); //fermeture de modale (btn)
-const modalOpenButtons = document.querySelectorAll(".js-modal"); //ouverture de modale (btn)
-const ajoutPhotoButton = document.getElementById("ajoutPhotoButton"); //btn qui ouvre la deuxième partie de la modale
+const modalContents = document.querySelectorAll(".modale-content");
+const modalCloseButtons = document.querySelectorAll(".js-modal-close");
+const modalOpenButtons = document.querySelectorAll(".js-modal");
+const ajoutPhotoButton = document.getElementById("ajoutPhotoButton");
 const modale1 = document.getElementById("modale1"); //partie 1 de la modale (galerie)
 const modale2 = document.getElementById("modale2"); //partie 2 de la modale (formulaire)
 
@@ -137,7 +136,7 @@ const openModal = () => {
 // Fonction pour fermer la modale
 const closeModal = () => {
   modal.style.display = "none";
-  document.body.classList.remove("dim-background"); //enelever l'assombrissement quand on sort de la modale
+  document.body.classList.remove("dim-background");
 };
 
 // Ajout des écouteurs d'événements pour les boutons d'ouverture de la modale
